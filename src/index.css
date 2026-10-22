@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: #020617;
+    color: #f8fafc;
+  }
+}
+
+/* Custom modern dark scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.4);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.6);
+}
+
+/* Telegram Dark Mode specific tokens */
+.tg-dark-bg {
+  background-color: #0e1621;
+}
+
+.tg-dark-surface {
+  background-color: #17212b;
+}
+
+.tg-dark-bubble-in {
+  background-color: #182533;
+}
+
+.tg-dark-bubble-out {
+  background-color: #2b5278;
+}
