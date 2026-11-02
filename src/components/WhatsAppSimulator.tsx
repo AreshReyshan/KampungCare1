@@ -96,15 +96,15 @@ export const WhatsAppSimulator: React.FC<WhatsAppSimulatorProps> = ({
 
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="font-semibold text-base tracking-tight text-white">
+                <h3 className="font-display font-semibold text-base tracking-tight text-white">
                   KampungCare Careline
                 </h3>
-                <span className="bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-0.5 rounded-full font-bold border border-emerald-500/30">
-                  OFFICIAL
+                <span className="font-mono bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-0.5 rounded-md font-medium border border-emerald-500/30">
+                  Official
                 </span>
               </div>
-              <p className="text-xs text-slate-400 flex items-center gap-1.5">
-                <span className="text-emerald-400 font-medium">WhatsApp Business</span>
+              <p className="text-xs text-slate-400 flex items-center gap-1.5 font-mono text-[11px]">
+                <span className="text-emerald-400">WhatsApp Business</span>
                 <span>•</span>
                 <span>+60 11-KAMPUNG</span>
               </p>
@@ -124,11 +124,11 @@ export const WhatsAppSimulator: React.FC<WhatsAppSimulatorProps> = ({
         {/* Quick Demo Presets Banner */}
         <div className="bg-[#111b21] border-b border-[#222d34] p-3.5 space-y-2 shrink-0">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-emerald-400 uppercase tracking-wide flex items-center gap-1.5">
+            <span className="text-xs font-semibold text-emerald-300 flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-              1-Tap WhatsApp Presets
+              Quick demo presets
             </span>
-            <span className="text-[11px] text-slate-400">Tap to test live bot response</span>
+            <span className="text-[11px] text-slate-400 font-mono">Tap to test live bot</span>
           </div>
 
           <div className="grid grid-cols-1 gap-2">
@@ -139,7 +139,7 @@ export const WhatsAppSimulator: React.FC<WhatsAppSimulatorProps> = ({
                 <button
                   key={preset.id}
                   onClick={() => handleSend(preset.text)}
-                  className={`text-left p-2.5 rounded-xl border transition-all flex items-center justify-between text-xs ${
+                  className={`text-left p-2.5 rounded-xl border transition-[background-color,border-color] flex items-center justify-between text-xs ${
                     isEm
                       ? 'bg-rose-950/40 hover:bg-rose-900/50 border-rose-800/80 text-rose-200'
                       : 'bg-[#1f2c34] hover:bg-[#26353d] border-[#2f3d46] text-slate-200'
@@ -150,13 +150,13 @@ export const WhatsAppSimulator: React.FC<WhatsAppSimulatorProps> = ({
                     <div className="text-[11px] text-slate-400 truncate">{preset.sub}</div>
                   </div>
                   <span
-                    className={`shrink-0 px-2.5 py-1 rounded-full text-[11px] font-semibold ${
+                    className={`shrink-0 px-2.5 py-1 rounded-md text-[11px] font-mono font-medium ${
                       isEm
                         ? 'bg-rose-600 text-white shadow-xs'
                         : 'bg-emerald-600 text-white shadow-xs'
                     }`}
                   >
-                    Send Now
+                    Send preset
                   </span>
                 </button>
               );
@@ -210,7 +210,7 @@ export const WhatsAppSimulator: React.FC<WhatsAppSimulatorProps> = ({
 
                   <p className="whitespace-pre-wrap text-sm leading-relaxed">{msg.text}</p>
 
-                  <div className="flex items-center justify-end gap-1.5 mt-1.5 text-[11px] text-slate-300/80">
+                  <div className="flex items-center justify-end gap-1.5 mt-1.5 text-[11px] text-slate-300/80 font-mono">
                     <span>{msg.time}</span>
                     {isUser && <CheckCheck className="w-3.5 h-3.5 text-sky-400" />}
                   </div>

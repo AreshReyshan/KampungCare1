@@ -92,15 +92,15 @@ export const TelegramSimulator: React.FC<TelegramSimulatorProps> = ({
 
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="font-semibold text-base tracking-tight text-white">
+                <h3 className="font-display font-semibold text-base tracking-tight text-white">
                   KampungCare Bot
                 </h3>
-                <span className="bg-sky-500/20 text-sky-400 text-[10px] px-2 py-0.5 rounded-full font-bold border border-sky-500/30">
+                <span className="font-mono bg-sky-500/20 text-sky-400 text-[10px] px-2 py-0.5 rounded-md font-medium border border-sky-500/30">
                   bot
                 </span>
               </div>
-              <p className="text-xs text-slate-400 flex items-center gap-1.5">
-                <span className="text-sky-300 font-medium">@KampungCareBot</span>
+              <p className="text-xs text-slate-400 flex items-center gap-1.5 font-mono text-[11px]">
+                <span className="text-sky-300">@KampungCareBot</span>
                 <span>•</span>
                 <span className="text-emerald-400">Setapak &amp; Melati</span>
               </p>
@@ -118,13 +118,13 @@ export const TelegramSimulator: React.FC<TelegramSimulatorProps> = ({
         </div>
 
         {/* Quick Demo Presets Banner */}
-        <div className="bg-[#17212b]/90 border-b border-slate-800 p-3.5 space-y-2 shrink-0">
+        <div className="bg-[#17212b]/95 border-b border-slate-800 p-3.5 space-y-2 shrink-0">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-sky-400 uppercase tracking-wide flex items-center gap-1.5">
+            <span className="text-xs font-semibold text-sky-300 flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5 text-sky-400" />
-              1-Tap Telegram Presets
+              Quick demo presets
             </span>
-            <span className="text-[11px] text-slate-400">Click to send immediately</span>
+            <span className="text-[11px] text-slate-400 font-mono">Click to test scenario</span>
           </div>
 
           <div className="grid grid-cols-1 gap-2">
@@ -135,7 +135,7 @@ export const TelegramSimulator: React.FC<TelegramSimulatorProps> = ({
                 <button
                   key={preset.id}
                   onClick={() => handleSend(preset.text)}
-                  className={`text-left p-2.5 rounded-xl border transition-all flex items-center justify-between text-xs ${
+                  className={`text-left p-2.5 rounded-xl border transition-[background-color,border-color] flex items-center justify-between text-xs ${
                     isEm
                       ? 'bg-rose-950/40 hover:bg-rose-900/50 border-rose-800/80 text-rose-200'
                       : 'bg-slate-900 hover:bg-slate-800 border-slate-800 text-slate-200'
@@ -146,13 +146,13 @@ export const TelegramSimulator: React.FC<TelegramSimulatorProps> = ({
                     <div className="text-[11px] text-slate-400 truncate">{preset.sub}</div>
                   </div>
                   <span
-                    className={`shrink-0 px-2.5 py-1 rounded-full text-[11px] font-semibold ${
+                    className={`shrink-0 px-2.5 py-1 rounded-md text-[11px] font-mono font-medium ${
                       isEm
                         ? 'bg-rose-600 text-white shadow-xs'
                         : 'bg-sky-600 text-white shadow-xs'
                     }`}
                   >
-                    Tap to Send
+                    Send preset
                   </span>
                 </button>
               );
@@ -205,7 +205,7 @@ export const TelegramSimulator: React.FC<TelegramSimulatorProps> = ({
 
                   <p className="whitespace-pre-wrap text-sm leading-relaxed">{msg.text}</p>
 
-                  <div className="flex items-center justify-end gap-1.5 mt-1.5 text-[11px] text-slate-400">
+                  <div className="flex items-center justify-end gap-1.5 mt-1.5 text-[11px] text-slate-400 font-mono">
                     <span>{msg.time}</span>
                     {isUser && <CheckCheck className="w-3.5 h-3.5 text-sky-300" />}
                   </div>

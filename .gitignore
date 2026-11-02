@@ -12,7 +12,9 @@ dist
 dist-ssr
 *.local
 
-# Editor directories and files
+# Large media and archives
+video/
+*.zip
 .vscode/*
 !.vscode/extensions.json
 .idea

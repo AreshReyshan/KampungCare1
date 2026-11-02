@@ -23,23 +23,23 @@ export const Header: React.FC<HeaderProps> = ({
     switch (currentTab) {
       case 'triage':
         return {
-          title: 'Triage Inbox',
-          subtitle: 'Prioritised feed of Telegram & WhatsApp requests, emergencies, and check-ins',
+          title: 'Triage inbox',
+          subtitle: 'Prioritised intake of Telegram & WhatsApp requests, medical dispatches, and check-ins',
         };
       case 'active':
         return {
-          title: 'Active Care & Dispatches',
-          subtitle: 'Real-time timeline and status of ongoing visits across Setapak',
+          title: 'Active care register',
+          subtitle: 'Live timetable of ongoing household visits and medication escorts across Setapak',
         };
       case 'residents':
         return {
-          title: 'Residents (Care Passports)',
-          subtitle: 'Senior health profiles, mobility requirements, and emergency contacts',
+          title: 'Resident care passports',
+          subtitle: 'Senior health profiles, clinical mobility needs, and next-of-kin lines',
         };
       case 'volunteers':
         return {
-          title: 'Community Volunteers',
-          subtitle: 'Verified local helpers, proximity, and specialised skill tags',
+          title: 'Community volunteers',
+          subtitle: 'Verified neighborhood helpers, verified skills, and active proximity',
         };
     }
   };
@@ -47,22 +47,21 @@ export const Header: React.FC<HeaderProps> = ({
   const info = getTabInfo();
 
   return (
-    <header className="sticky top-0 z-10 bg-slate-950/85 backdrop-blur-md border-b border-slate-800/80 px-10 py-6">
+    <header className="sticky top-0 z-10 bg-[#0c1313]/90 backdrop-blur-md border-b border-[#1c2c2a] px-10 py-5">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-5">
         {/* Title & Description */}
         <div>
           <div className="flex items-center gap-3">
-            <h2 className="text-2xl font-bold tracking-tight text-white font-sans">
+            <h2 className="text-2xl font-bold tracking-tight text-[#f0f5f4] font-display">
               {info.title}
             </h2>
             {emergencyCount > 0 && currentTab === 'triage' && (
-              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-rose-950/80 text-rose-300 border border-rose-800 shadow-sm">
-                <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
-                {emergencyCount} Emergency Active
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-xs font-mono-dose bg-[#3b1219] text-[#fecdd3] border border-[#881337]">
+                <span>{emergencyCount} active emergency</span>
               </span>
             )}
           </div>
-          <p className="text-sm text-slate-400 mt-1 font-normal">
+          <p className="text-xs text-[#809692] mt-1 font-sans">
             {info.subtitle}
           </p>
         </div>
@@ -70,18 +69,18 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Search & Actions */}
         <div className="flex items-center gap-3">
           <div className="relative w-64 md:w-80">
-            <Search className="w-4 h-4 text-slate-500 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <Search className="w-4 h-4 text-[#738a86] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
-              placeholder="Search resident, volunteer, skill..."
-              className="w-full pl-10 pr-4 py-2.5 bg-slate-900 text-sm text-slate-100 placeholder-slate-500 rounded-xl border border-slate-800 shadow-inner focus:outline-none focus:ring-2 focus:ring-sky-500/30 focus:border-sky-500 transition-all"
+              placeholder="Filter resident, helper, or skill..."
+              className="w-full pl-9 pr-4 py-2 bg-[#121c1c] text-xs text-[#f0f5f4] placeholder-[#738a86] rounded-lg border border-[#223533] shadow-inner focus:outline-none focus:border-[#10b981] font-sans"
             />
             {searchQuery && (
               <button
                 onClick={() => onSearchChange('')}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-slate-500 hover:text-slate-300"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[#738a86] hover:text-[#f0f5f4]"
               >
                 ✕
               </button>
@@ -90,22 +89,20 @@ export const Header: React.FC<HeaderProps> = ({
 
           <button
             onClick={onOpenTelegram}
-            className="flex items-center gap-2 px-3.5 py-2.5 bg-sky-950/60 hover:bg-sky-900/60 text-sky-300 rounded-xl text-xs font-semibold border border-sky-800/80 transition-all shadow-xs active:scale-95"
-            title="Open Telegram Bot Mobile Simulator"
+            className="flex items-center gap-1.5 px-3 py-2 bg-[#122227] hover:bg-[#182c33] text-[#38bdf8] rounded-lg text-xs font-mono-dose border border-[#1e3c45] active:translate-y-0.5 transition-transform duration-100 ease-out"
+            title="Open Telegram Bot simulator"
           >
-            <Send className="w-4 h-4 text-sky-400" />
-            <span className="hidden sm:inline">Telegram</span>
-            <span className="w-2 h-2 rounded-full bg-sky-400"></span>
+            <Send className="w-3.5 h-3.5" />
+            <span>@Telegram</span>
           </button>
 
           <button
             onClick={onOpenWhatsApp}
-            className="flex items-center gap-2 px-3.5 py-2.5 bg-emerald-950/60 hover:bg-emerald-900/60 text-emerald-300 rounded-xl text-xs font-semibold border border-emerald-800/80 transition-all shadow-xs active:scale-95"
-            title="Open WhatsApp Careline Mobile Simulator"
+            className="flex items-center gap-1.5 px-3 py-2 bg-[#12241f] hover:bg-[#172e27] text-[#4ade80] rounded-lg text-xs font-mono-dose border border-[#1d4137] active:translate-y-0.5 transition-transform duration-100 ease-out"
+            title="Open WhatsApp Careline simulator"
           >
-            <MessageSquare className="w-4 h-4 text-emerald-400" />
-            <span className="hidden sm:inline">WhatsApp</span>
-            <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <MessageSquare className="w-3.5 h-3.5" />
+            <span>WhatsApp</span>
           </button>
         </div>
       </div>

@@ -6,13 +6,14 @@ import {
   Phone, 
   Calendar,
   ExternalLink,
-  CheckCircle
+  MessageSquare,
+  Clock
 } from 'lucide-react';
 import type { ActiveDispatch, Resident } from '../types';
 
 interface ActiveDispatchesProps {
   dispatches: ActiveDispatch[];
-  residents: Resident[];
+  residents?: Resident[];
   onOpenCompleteVisit: (dispatch: ActiveDispatch) => void;
   onOpenResidentPassport: (residentId: string) => void;
 }
@@ -33,103 +34,110 @@ export const ActiveDispatches: React.FC<ActiveDispatchesProps> = ({
   const completedCount = dispatches.filter((d) => d.status === 'completed').length;
 
   return (
-    <div className="space-y-6 max-w-5xl mx-auto">
-      {/* Top Controls & Status Counter */}
+    <div className="space-y-6 max-w-6xl mx-auto">
+      {/* Top Filter Controls */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        {/* Status Pills */}
         <div className="flex items-center gap-2">
           <button
             onClick={() => setFilter('all')}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
+            className={`px-3.5 py-1.5 rounded-lg text-xs font-medium font-sans transition-colors ${
               filter === 'all'
-                ? 'bg-slate-100 text-slate-900 shadow-sm'
-                : 'bg-slate-900 text-slate-400 hover:bg-slate-800 border border-slate-800'
+                ? 'bg-[#10b981] text-[#042f2e] font-semibold'
+                : 'bg-[#121c1c] text-[#9eb1ad] hover:text-[#f0f5f4] border border-[#20312f]'
             }`}
           >
-            All Visits ({dispatches.length})
+            All visits ({dispatches.length})
           </button>
           <button
             onClick={() => setFilter('dispatched')}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
+            className={`px-3.5 py-1.5 rounded-lg text-xs font-medium font-sans transition-colors ${
               filter === 'dispatched'
-                ? 'bg-sky-600 text-white shadow-sm'
-                : 'bg-slate-900 text-slate-400 hover:bg-slate-800 border border-slate-800'
+                ? 'bg-[#0284c7] text-white font-semibold'
+                : 'bg-[#121c1c] text-[#9eb1ad] hover:text-[#f0f5f4] border border-[#20312f]'
             }`}
           >
-            En Route ({dispatches.filter((d) => d.status === 'dispatched').length})
+            En route ({dispatches.filter((d) => d.status === 'dispatched').length})
           </button>
           <button
             onClick={() => setFilter('in_progress')}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
+            className={`px-3.5 py-1.5 rounded-lg text-xs font-medium font-sans transition-colors ${
               filter === 'in_progress'
-                ? 'bg-amber-600 text-white shadow-sm'
-                : 'bg-slate-900 text-slate-400 hover:bg-slate-800 border border-slate-800'
+                ? 'bg-[#d97706] text-white font-semibold'
+                : 'bg-[#121c1c] text-[#9eb1ad] hover:text-[#f0f5f4] border border-[#20312f]'
             }`}
           >
-            In Progress ({dispatches.filter((d) => d.status === 'in_progress').length})
+            In progress ({dispatches.filter((d) => d.status === 'in_progress').length})
           </button>
           <button
             onClick={() => setFilter('completed')}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
+            className={`px-3.5 py-1.5 rounded-lg text-xs font-medium font-sans transition-colors ${
               filter === 'completed'
-                ? 'bg-emerald-600 text-white shadow-sm'
-                : 'bg-slate-900 text-slate-400 hover:bg-slate-800 border border-slate-800'
+                ? 'bg-[#059669] text-white font-semibold'
+                : 'bg-[#121c1c] text-[#9eb1ad] hover:text-[#f0f5f4] border border-[#20312f]'
             }`}
           >
-            Completed Today ({completedCount})
+            Completed ({completedCount})
           </button>
         </div>
 
-        <div className="flex items-center gap-2 text-xs text-slate-400">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span>{activeCount} active helpers dispatched across Setapak</span>
+        <div className="flex items-center gap-2 text-xs text-[#809692] font-mono-dose">
+          <span className="w-2 h-2 rounded-full bg-[#10b981]"></span>
+          <span>{activeCount} active dispatches deployed in Setapak</span>
         </div>
       </div>
 
-      {/* Dispatches Grid */}
+      {/* Dispatches List */}
       <div className="space-y-4">
         {filteredDispatches.map((dispatch) => {
           const isCompleted = dispatch.status === 'completed';
+          const isWhatsApp = dispatch.channel === 'whatsapp';
 
           return (
-            <div
+            <article
               key={dispatch.id}
-              className={`border rounded-2xl p-6 transition-all ${
-                isCompleted
-                  ? 'border-slate-800/60 bg-slate-900/40 opacity-80'
-                  : 'bg-slate-900 border-slate-800 shadow-md hover:border-slate-700'
+              className={`dose-tray p-5 transition-transform duration-100 ease-out ${
+                isCompleted ? 'opacity-85' : 'hover:border-[#334c48]'
               }`}
             >
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-                {/* Left: Resident Info & Service Details (Cols 1-7) */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
+                {/* Left: Resident Info & Care Task */}
                 <div className="lg:col-span-7 space-y-3">
-                  {/* Status header & Telegram sync badge */}
-                  <div className="flex flex-wrap items-center gap-2">
+                  {/* Status header & Channel line */}
+                  <div className="flex flex-wrap items-center gap-2 text-xs">
                     <span
-                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${
+                      className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-mono-dose ${
                         isCompleted
-                          ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-800/80'
+                          ? 'bg-[#142e27] text-[#6ee7b7] border border-[#205244]'
                           : dispatch.status === 'in_progress'
-                          ? 'bg-amber-950/80 text-amber-300 border border-amber-800/80'
-                          : 'bg-sky-950/80 text-sky-300 border border-sky-800/80'
+                          ? 'bg-[#2b1d11] text-[#fcd34d] border border-[#78350f]'
+                          : 'bg-[#122227] text-[#38bdf8] border border-[#1e3c45]'
                       }`}
                     >
                       {isCompleted ? (
                         <>
-                          <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />
-                          Visit Completed
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#10b981]" />
+                          <span>Visit completed &amp; logged</span>
                         </>
                       ) : (
                         <>
-                          <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
-                          {dispatch.estimatedArrival}
+                          <Clock className="w-3 h-3 text-[#38bdf8]" />
+                          <span>{dispatch.estimatedArrival}</span>
                         </>
                       )}
                     </span>
 
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-medium bg-slate-800 text-slate-300">
-                      <Send className="w-3 h-3 text-sky-400" />
-                      Dispatched via @KampungCareBot
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs font-mono-dose bg-[#162322] text-[#9eb1ad] border border-[#233533]">
+                      {isWhatsApp ? (
+                        <>
+                          <MessageSquare className="w-3 h-3 text-[#4ade80]" />
+                          <span>WhatsApp dispatch</span>
+                        </>
+                      ) : (
+                        <>
+                          <Send className="w-3 h-3 text-[#38bdf8]" />
+                          <span>Telegram dispatch</span>
+                        </>
+                      )}
                     </span>
                   </div>
 
@@ -142,48 +150,46 @@ export const ActiveDispatches: React.FC<ActiveDispatchesProps> = ({
                       <img
                         src={dispatch.residentAvatar}
                         alt={dispatch.residentName}
-                        className="w-12 h-12 rounded-2xl object-cover ring-2 ring-slate-800 group-hover:ring-sky-400 transition-all"
+                        className="w-12 h-12 rounded-xl object-cover border border-[#2b3f3c]"
                       />
                     </button>
 
                     <div className="space-y-0.5">
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => onOpenResidentPassport(dispatch.residentId)}
-                          className="text-base font-semibold text-white hover:text-sky-400 transition-colors flex items-center gap-1"
-                        >
-                          <span>{dispatch.residentName}</span>
-                          <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
-                        </button>
-                      </div>
+                      <button
+                        onClick={() => onOpenResidentPassport(dispatch.residentId)}
+                        className="text-base font-bold text-[#f0f5f4] hover:text-[#10b981] transition-colors flex items-center gap-1.5 font-display"
+                      >
+                        <span>{dispatch.residentName}</span>
+                        <ExternalLink className="w-3.5 h-3.5 text-[#738a86]" />
+                      </button>
 
-                      <div className="flex items-center gap-1 text-xs text-slate-400">
-                        <MapPin className="w-3 h-3 text-slate-500 shrink-0" />
+                      <div className="flex items-center gap-1 text-xs text-[#809692] font-mono-dose">
+                        <MapPin className="w-3 h-3 text-[#738a86] shrink-0" />
                         <span>{dispatch.residentAddress}</span>
                       </div>
                     </div>
                   </div>
 
-                  {/* Task description */}
-                  <div className="bg-slate-950/60 rounded-xl p-3 border border-slate-800 text-xs space-y-1">
-                    <div className="font-semibold text-slate-200 flex items-center justify-between">
+                  {/* Task details */}
+                  <div className="bg-[#0c1313] rounded-lg p-3 border border-[#20312f] text-xs space-y-1">
+                    <div className="font-semibold text-[#f0f5f4] flex items-center justify-between font-sans">
                       <span>{dispatch.serviceType}</span>
-                      <span className="text-[11px] text-sky-400 font-medium">
+                      <span className="text-[#a7f3d0] font-mono-dose">
                         {dispatch.carePill}
                       </span>
                     </div>
                     {dispatch.notes && (
-                      <p className="text-slate-400 text-[11px] leading-relaxed">
+                      <p className="text-[#809692] text-xs font-sans leading-relaxed">
                         {dispatch.notes}
                       </p>
                     )}
                   </div>
                 </div>
 
-                {/* Right: Assigned Volunteer & Action (Cols 8-12) */}
-                <div className="lg:col-span-5 bg-slate-950/60 border border-slate-800 rounded-2xl p-4 space-y-3">
-                  <div className="text-[11px] font-bold text-slate-500 tracking-wider uppercase">
-                    Assigned Community Helper
+                {/* Right: Assigned Volunteer & Action */}
+                <div className="lg:col-span-5 border-t lg:border-t-0 lg:border-l border-[#20312f] pt-4 lg:pt-0 lg:pl-5 space-y-3">
+                  <div className="text-xs font-medium text-[#809692] font-sans">
+                    Assigned community volunteer
                   </div>
 
                   <div className="flex items-center justify-between">
@@ -191,54 +197,51 @@ export const ActiveDispatches: React.FC<ActiveDispatchesProps> = ({
                       <img
                         src={dispatch.volunteerAvatar}
                         alt={dispatch.volunteerName}
-                        className="w-10 h-10 rounded-xl object-cover ring-2 ring-slate-800 shadow-sm"
+                        className="w-10 h-10 rounded-lg object-cover border border-[#2b3f3c]"
                       />
                       <div>
-                        <div className="text-sm font-semibold text-white">
+                        <div className="text-sm font-bold text-[#f0f5f4] font-display">
                           {dispatch.volunteerName}
                         </div>
-                        <div className="text-xs text-slate-400 flex items-center gap-1">
-                          <Phone className="w-3 h-3 text-slate-500" />
+                        <div className="text-xs text-[#809692] flex items-center gap-1 font-mono-dose">
+                          <Phone className="w-3 h-3 text-[#738a86]" />
                           <span>{dispatch.volunteerPhone}</span>
                         </div>
                       </div>
                     </div>
 
-                    <div className="text-right text-[11px] text-slate-500">
+                    <div className="text-right text-xs font-mono-dose text-[#738a86]">
                       <div>Dispatched</div>
-                      <div className="font-semibold text-slate-300">{dispatch.dispatchedAt}</div>
+                      <div className="font-semibold text-[#c6d6d2]">{dispatch.dispatchedAt}</div>
                     </div>
                   </div>
 
-                  {/* Action Button */}
                   {!isCompleted ? (
                     <button
                       onClick={() => onOpenCompleteVisit(dispatch)}
-                      className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-medium text-xs shadow-md shadow-emerald-600/20 active:scale-[0.98] transition-all"
+                      className="dose-btn-primary w-full"
                     >
                       <CheckCircle2 className="w-4 h-4" />
-                      <span>Complete Visit &amp; Log Outcome</span>
+                      <span>Complete visit &amp; log outcome</span>
                     </button>
                   ) : (
-                    <div className="flex items-center justify-center gap-1.5 py-2 text-xs font-semibold text-emerald-300 bg-emerald-950/80 border border-emerald-800/80 rounded-xl">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                      <span>Visit Logged to Care Passport</span>
+                    <div className="flex items-center justify-center gap-2 py-2 px-3 text-xs font-mono-dose text-[#a7f3d0] bg-[#142e27] border border-[#205244] rounded-lg">
+                      <CheckCircle2 className="w-4 h-4 text-[#10b981]" />
+                      <span>Outcome verified on passport</span>
                     </div>
                   )}
                 </div>
               </div>
-            </div>
+            </article>
           );
         })}
 
         {filteredDispatches.length === 0 && (
-          <div className="bg-slate-900 border border-dashed border-slate-800 rounded-3xl p-12 text-center space-y-3">
-            <div className="w-12 h-12 rounded-full bg-sky-950/60 border border-sky-800/60 text-sky-400 flex items-center justify-center mx-auto">
-              <Calendar className="w-6 h-6" />
-            </div>
-            <h3 className="text-base font-semibold text-white">No visits in this status</h3>
-            <p className="text-xs text-slate-400 max-w-sm mx-auto">
-              Assign pending tasks from the Triage Inbox to start active dispatches.
+          <div className="p-12 text-center border border-dashed border-[#20312f] rounded-xl space-y-2">
+            <Calendar className="w-8 h-8 text-[#10b981] mx-auto" />
+            <h3 className="text-base font-bold text-[#f0f5f4] font-display">No visits in this category</h3>
+            <p className="text-xs text-[#809692] font-sans max-w-sm mx-auto">
+              Assign action items from the Triage Inbox to start active dispatches.
             </p>
           </div>
         )}

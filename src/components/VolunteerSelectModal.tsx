@@ -26,26 +26,26 @@ export const VolunteerSelectModal: React.FC<VolunteerSelectModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
       <div 
-        className="fixed inset-0 bg-slate-950/70 backdrop-blur-sm transition-opacity animate-fade-in"
+        className="fixed inset-0 bg-[#060a0a]/80 backdrop-blur-sm transition-opacity animate-fade-in"
         onClick={onClose}
       />
 
       <div className="flex min-h-full items-center justify-center p-4">
-        <div className="relative w-full max-w-xl bg-slate-900 text-slate-100 rounded-3xl shadow-2xl p-7 overflow-hidden animate-slide-up border border-slate-800">
+        <div className="relative w-full max-w-xl bg-[#101717] text-[#ecf4f2] rounded-3xl shadow-2xl p-7 overflow-hidden animate-slide-up border border-[#203030]">
           {/* Header */}
-          <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+          <div className="flex items-center justify-between pb-4 border-b border-[#1d2a2a]">
             <div>
-              <h3 className="font-bold text-lg text-white">Select Community Helper</h3>
-              <p className="text-xs text-slate-400">
+              <h3 className="font-display font-bold text-lg text-white">Select community helper</h3>
+              <p className="text-xs text-[#87a09c]">
                 Assign a volunteer for {triageItem.residentName}
               </p>
             </div>
 
             <button
               onClick={onClose}
-              className="w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-400 hover:text-white transition-colors"
+              className="w-9 h-9 rounded-full bg-[#182323] hover:bg-[#203030] flex items-center justify-center text-[#87a09c] hover:text-white transition-colors border border-[#243535]"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </button>
           </div>
 
@@ -61,31 +61,31 @@ export const VolunteerSelectModal: React.FC<VolunteerSelectModalProps> = ({
                     onSelectVolunteer(triageItem.id, vol.id);
                     onClose();
                   }}
-                  className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-3.5 ${
+                  className={`p-4 rounded-2xl border transition-[background-color,border-color] cursor-pointer flex items-center justify-between gap-3.5 ${
                     isSelected
-                      ? 'bg-sky-950/40 border-sky-500 ring-1 ring-sky-500/50'
-                      : 'bg-slate-950/60 border-slate-800 hover:bg-slate-800/60 hover:border-slate-700'
+                      ? 'bg-emerald-950/40 border-emerald-500/80 ring-1 ring-emerald-500/40'
+                      : 'bg-[#141f1f] border-[#223333] hover:bg-[#182525] hover:border-[#2a3c3c]'
                   }`}
                 >
                   <div className="flex items-center gap-3.5">
                     <img
                       src={vol.avatar}
                       alt={vol.name}
-                      className="w-13 h-13 rounded-2xl object-cover ring-2 ring-slate-800 shadow-xs"
+                      className="w-12 h-12 rounded-xl object-cover ring-1 ring-[#2c4040]"
                     />
 
                     <div>
                       <div className="flex items-center gap-2.5">
-                        <span className="font-bold text-base text-white">{vol.name}</span>
-                        <span className="text-xs text-sky-400 font-bold bg-sky-950/80 border border-sky-800/80 px-2.5 py-0.5 rounded-full">
+                        <span className="font-semibold text-sm text-white">{vol.name}</span>
+                        <span className="font-mono text-xs text-emerald-300 bg-emerald-950/50 border border-emerald-800/60 px-2 py-0.5 rounded-md">
                           {vol.distanceKm} km away
                         </span>
                       </div>
 
-                      <div className="flex items-center gap-2 text-xs text-slate-400 mt-1">
+                      <div className="flex items-center gap-2 text-xs text-[#87a09c] mt-1">
                         <span className="flex items-center gap-1 text-amber-400">
                           <Star className="w-3.5 h-3.5 fill-current" />
-                          <span className="text-slate-200 font-semibold">{vol.rating}</span>
+                          <span className="font-mono text-[#ecf4f2] text-xs">{vol.rating}</span>
                         </span>
                         <span>•</span>
                         <span>{vol.neighborhood}</span>
@@ -95,7 +95,7 @@ export const VolunteerSelectModal: React.FC<VolunteerSelectModalProps> = ({
                         {vol.verifiedSkills.slice(0, 2).map((skill) => (
                           <span
                             key={skill}
-                            className="text-[11px] bg-slate-800 text-slate-300 border border-slate-700 px-2.5 py-0.5 rounded-md"
+                            className="font-mono text-[11px] bg-[#1a2626] text-[#a8bfbc] border border-[#2b3d3d] px-2 py-0.5 rounded-md"
                           >
                             {skill}
                           </span>
@@ -106,11 +106,11 @@ export const VolunteerSelectModal: React.FC<VolunteerSelectModalProps> = ({
 
                   <div className="shrink-0">
                     {isSelected ? (
-                      <span className="w-7 h-7 rounded-full bg-sky-500 text-white flex items-center justify-center shadow-xs">
+                      <span className="w-7 h-7 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-xs">
                         <Check className="w-4 h-4" />
                       </span>
                     ) : (
-                      <span className="text-xs font-bold text-slate-500 hover:text-sky-400">
+                      <span className="text-xs font-medium text-[#87a09c] hover:text-emerald-400">
                         Select
                       </span>
                     )}
@@ -120,10 +120,10 @@ export const VolunteerSelectModal: React.FC<VolunteerSelectModalProps> = ({
             })}
           </div>
 
-          <div className="mt-5 pt-4 border-t border-slate-800 flex justify-end">
+          <div className="mt-5 pt-4 border-t border-[#1d2a2a] flex justify-end">
             <button
               onClick={onClose}
-              className="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-xl border border-slate-700 transition-colors"
+              className="dose-btn-secondary text-xs"
             >
               Cancel
             </button>

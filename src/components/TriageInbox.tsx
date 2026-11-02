@@ -6,9 +6,8 @@ import {
   PhoneCall, 
   ChevronDown, 
   ChevronUp, 
-  Sparkles, 
   CheckCircle2, 
-  MapPin,
+  MapPin, 
   ExternalLink,
   ShieldAlert,
   UserCheck,
@@ -59,140 +58,130 @@ export const TriageInbox: React.FC<TriageInboxProps> = ({
   const otherItems = filteredItems.filter((i) => i.type !== 'emergency');
 
   return (
-    <div className="space-y-7 max-w-6xl mx-auto">
-      {/* Filter Pill Bar */}
-      <div className="flex flex-wrap items-center gap-2.5">
+    <div className="space-y-6 max-w-6xl mx-auto">
+      {/* Category Filter Controls */}
+      <div className="flex flex-wrap items-center gap-2">
         <button
           onClick={() => setFilter('all')}
-          className={`px-4 py-2.5 rounded-full text-xs font-bold transition-all ${
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-medium font-sans transition-colors ${
             filter === 'all'
-              ? 'bg-slate-100 text-slate-900 shadow-sm'
-              : 'bg-slate-900 text-slate-400 hover:bg-slate-800 border border-slate-800'
+              ? 'bg-[#10b981] text-[#042f2e] font-semibold'
+              : 'bg-[#121c1c] text-[#9eb1ad] hover:text-[#f0f5f4] border border-[#20312f]'
           }`}
         >
-          All Action Items ({items.length})
+          All action items ({items.length})
         </button>
 
         <button
           onClick={() => setFilter('emergency')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-bold transition-all ${
+          className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-medium font-sans transition-colors ${
             filter === 'emergency'
-              ? 'bg-rose-600 text-white shadow-sm'
+              ? 'bg-[#f43f5e] text-white font-semibold'
               : emergencyCount > 0
-              ? 'bg-rose-950/70 text-rose-300 border border-rose-800/80 hover:bg-rose-900/60'
-              : 'bg-slate-900 text-slate-400 hover:bg-slate-800 border border-slate-800'
+              ? 'bg-[#2b1016] text-[#fda4af] border border-[#881337]'
+              : 'bg-[#121c1c] text-[#9eb1ad] hover:text-[#f0f5f4] border border-[#20312f]'
           }`}
         >
-          {emergencyCount > 0 && (
-            <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping"></span>
-          )}
-          Emergencies ({emergencyCount})
+          <span>Emergencies</span>
+          <span className="font-mono-dose">({emergencyCount})</span>
         </button>
 
         <button
           onClick={() => setFilter('telegram_request')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-bold transition-all ${
+          className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-medium font-sans transition-colors ${
             filter === 'telegram_request'
-              ? 'bg-sky-600 text-white shadow-sm'
-              : 'bg-slate-900 text-slate-400 hover:bg-slate-800 border border-slate-800'
+              ? 'bg-[#0284c7] text-white font-semibold'
+              : 'bg-[#121c1c] text-[#9eb1ad] hover:text-[#f0f5f4] border border-[#20312f]'
           }`}
         >
-          <Send className="w-3.5 h-3.5 text-sky-400" />
-          Telegram ({telegramCount})
+          <Send className="w-3 h-3 text-[#38bdf8]" />
+          <span>Telegram</span>
+          <span className="font-mono-dose">({telegramCount})</span>
         </button>
 
         <button
           onClick={() => setFilter('whatsapp_request')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-bold transition-all ${
+          className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-medium font-sans transition-colors ${
             filter === 'whatsapp_request'
-              ? 'bg-emerald-600 text-white shadow-sm'
-              : 'bg-slate-900 text-slate-400 hover:bg-slate-800 border border-slate-800'
+              ? 'bg-[#059669] text-white font-semibold'
+              : 'bg-[#121c1c] text-[#9eb1ad] hover:text-[#f0f5f4] border border-[#20312f]'
           }`}
         >
-          <MessageSquare className="w-3.5 h-3.5 text-emerald-400" />
-          WhatsApp ({whatsAppCount})
+          <MessageSquare className="w-3 h-3 text-[#4ade80]" />
+          <span>WhatsApp</span>
+          <span className="font-mono-dose">({whatsAppCount})</span>
         </button>
 
         <button
           onClick={() => setFilter('overdue_checkin')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-bold transition-all ${
+          className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-medium font-sans transition-colors ${
             filter === 'overdue_checkin'
-              ? 'bg-amber-600 text-white shadow-sm'
-              : 'bg-slate-900 text-slate-400 hover:bg-slate-800 border border-slate-800'
+              ? 'bg-[#d97706] text-white font-semibold'
+              : 'bg-[#121c1c] text-[#9eb1ad] hover:text-[#f0f5f4] border border-[#20312f]'
           }`}
         >
-          <Clock className="w-3.5 h-3.5 text-amber-400" />
-          Overdue Check-Ins ({overdueCount})
+          <Clock className="w-3 h-3 text-[#fbbf24]" />
+          <span>Overdue check-ins</span>
+          <span className="font-mono-dose">({overdueCount})</span>
         </button>
       </div>
 
-      {/* 1. Emergency Alert Banners (Top Priority) */}
+      {/* 1. Emergency Banner (Hallmark Dose Clinical Emergency Tray) */}
       {emergencyItems.map((item) => (
-        <div
+        <section
           key={item.id}
-          className="relative overflow-hidden bg-rose-950/40 border-2 border-rose-500/60 rounded-3xl p-7 shadow-xl shadow-rose-950/30 transition-all hover:border-rose-400 animate-fade-in"
+          aria-label="High priority emergency alert"
+          className="dose-tray-emergency p-6"
         >
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-            {/* Left: Avatar + Details */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
             <div className="flex items-start gap-4">
-              <div className="relative shrink-0">
-                <img
-                  src={item.residentAvatar}
-                  alt={item.residentName}
-                  className="w-16 h-16 rounded-2xl object-cover ring-2 ring-rose-500 shadow-md"
-                />
-                <span className="absolute -top-1.5 -right-1.5 flex h-4 w-4">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-4 w-4 bg-rose-500"></span>
-                </span>
-              </div>
+              <img
+                src={item.residentAvatar}
+                alt={item.residentName}
+                className="w-14 h-14 rounded-xl object-cover border border-[#f43f5e]/40 shrink-0"
+              />
 
-              <div className="space-y-2">
-                <div className="flex flex-wrap items-center gap-2.5">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
                   <button
                     onClick={() => onOpenResidentPassport(item.residentId)}
-                    className="text-xl font-bold text-white hover:text-sky-300 hover:underline flex items-center gap-1.5 transition-colors"
+                    className="text-lg font-bold text-white hover:text-[#a7f3d0] transition-colors flex items-center gap-1.5 font-display"
                   >
                     <span>{item.residentName}</span>
-                    <ExternalLink className="w-4 h-4 text-slate-400" />
+                    <ExternalLink className="w-3.5 h-3.5 text-[#fda4af]" />
                   </button>
-                  <span className="text-sm text-slate-400">• {item.residentAge}yo</span>
-                  <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-rose-600 text-white uppercase tracking-wider">
-                    <ShieldAlert className="w-3.5 h-3.5" />
-                    Urgent Emergency
-                  </span>
+                  <span className="text-xs text-[#fda4af] font-mono-dose">{item.residentAge} yrs</span>
+                  <span className="text-xs text-[#fda4af] font-mono-dose">• {item.timeAgo}</span>
                 </div>
 
-                <p className="text-lg font-bold text-rose-100 leading-snug">
+                <p className="text-base font-semibold text-[#ffe4e6] leading-snug font-sans">
                   "{item.emergencySummary}"
                 </p>
 
-                <div className="flex flex-wrap items-center gap-2 pt-1 text-xs text-rose-300">
-                  <span className="inline-flex items-center gap-2 bg-rose-950/90 px-3.5 py-1.5 rounded-full border border-rose-800 font-medium text-rose-200">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                <div className="flex flex-wrap items-center gap-2 text-xs text-[#fda4af] pt-0.5 font-sans">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-[#3b1219] text-[#fecdd3] border border-[#881337] font-mono-dose">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#34d399]" />
                     {item.emergencyActionTag || 'Auto-replied 999 instructions & alerted daughter (Zainab)'}
                   </span>
-                  <span className="text-slate-400">• {item.timeAgo}</span>
                 </div>
               </div>
             </div>
 
-            {/* Right: Prominent Single Action Button */}
             <div className="shrink-0 flex items-center">
               <button
                 onClick={() => onOpenResolveEmergency(item)}
-                className="w-full md:w-auto flex items-center justify-center gap-2.5 px-6 py-4 bg-rose-600 hover:bg-rose-500 text-white rounded-2xl font-bold text-sm shadow-xl shadow-rose-600/35 active:scale-[0.98] transition-all"
+                className="dose-btn-emergency w-full md:w-auto"
               >
-                <PhoneCall className="w-5 h-5 animate-pulse" />
-                <span>Resolve &amp; Log Call</span>
+                <PhoneCall className="w-4 h-4" />
+                <span>Resolve &amp; log call</span>
               </button>
             </div>
           </div>
-        </div>
+        </section>
       ))}
 
-      {/* Main List: Telegram Requests, WhatsApp Requests & Overdue Check-ins */}
-      <div className="space-y-5">
+      {/* Main Action Feed: Compartment Trays */}
+      <div className="space-y-4">
         {otherItems.map((item) => {
           if (item.type === 'telegram_request' || item.type === 'whatsapp_request') {
             const isWhatsApp = item.type === 'whatsapp_request';
@@ -204,107 +193,86 @@ export const TriageInbox: React.FC<TriageInboxProps> = ({
             const originalMsg = item.originalWhatsAppMessage || item.originalTelegramMessage;
 
             return (
-              <div
+              <article
                 key={item.id}
-                className="bg-slate-900 border border-slate-800 rounded-3xl p-7 shadow-md hover:border-slate-700 transition-all animate-fade-in"
+                className="dose-tray p-5 transition-transform duration-100 ease-out hover:border-[#334c48]"
               >
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 items-center">
-                  {/* Left Side: Resident Info & AI Summary (Cols 1-7) */}
-                  <div className="lg:col-span-7 space-y-3.5">
-                    <div className="flex items-center gap-4">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
+                  {/* Left Side: Senior & Request Details */}
+                  <div className="lg:col-span-7 space-y-3">
+                    <div className="flex items-center gap-3.5">
                       <button
                         onClick={() => onOpenResidentPassport(item.residentId)}
-                        className="relative group shrink-0"
+                        className="relative shrink-0 group"
                       >
                         <img
                           src={item.residentAvatar}
                           alt={item.residentName}
-                          className="w-14 h-14 rounded-2xl object-cover ring-2 ring-slate-800 group-hover:ring-sky-500 transition-all shadow-sm"
+                          className="w-12 h-12 rounded-xl object-cover border border-[#2b3f3c]"
                         />
-                        <div
-                          className={`absolute -bottom-1 -right-1 w-6 h-6 rounded-full text-white flex items-center justify-center text-xs font-bold ring-2 ring-slate-900 shadow-sm ${
-                            isWhatsApp ? 'bg-emerald-500' : 'bg-sky-500'
-                          }`}
-                        >
-                          {isWhatsApp ? (
-                            <MessageSquare className="w-3.5 h-3.5" />
-                          ) : (
-                            <Send className="w-3.5 h-3.5 -rotate-12 translate-x-0.5" />
-                          )}
-                        </div>
                       </button>
 
-                      <div>
-                        <div className="flex items-center gap-2.5">
+                      <div className="space-y-0.5">
+                        <div className="flex items-center gap-2">
                           <button
                             onClick={() => onOpenResidentPassport(item.residentId)}
-                            className="text-lg font-bold text-white hover:text-sky-400 transition-colors flex items-center gap-1.5"
+                            className="text-base font-bold text-[#f0f5f4] hover:text-[#10b981] transition-colors font-display"
                           >
-                            <span>{item.residentName}</span>
+                            {item.residentName}
                           </button>
-                          <span className="text-sm text-slate-400">• {item.residentAge}yo</span>
+                          <span className="text-xs text-[#809692] font-mono-dose">{item.residentAge} yrs</span>
                         </div>
-                        <div className="flex items-center gap-2 text-xs text-slate-400 mt-1">
-                          <span className="flex items-center gap-1 text-slate-400">
-                            <MapPin className="w-3.5 h-3.5 text-slate-500" />
+
+                        <div className="flex items-center gap-2 text-xs text-[#809692] font-mono-dose">
+                          <span className="flex items-center gap-1 text-[#9eb1ad]">
+                            <MapPin className="w-3 h-3 text-[#738a86]" />
                             {item.residentNeighborhood}
                           </span>
                           <span>•</span>
-                          <span className="text-slate-500">{item.timeAgo}</span>
+                          <span>{item.timeAgo}</span>
                         </div>
                       </div>
                     </div>
 
-                    {/* AI Structured Summary */}
-                    <div className="space-y-2 pl-1">
-                      <div className="flex flex-wrap items-center gap-2">
+                    {/* Channel line & AI synthesis */}
+                    <div className="space-y-1.5 pl-0.5">
+                      <div className="flex flex-wrap items-center gap-2 text-xs">
                         {isWhatsApp ? (
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-800/80">
-                            <MessageSquare className="w-3.5 h-3.5 text-emerald-400" />
-                            WhatsApp Careline
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-[#12241f] text-[#4ade80] border border-[#1d4137] font-mono-dose">
+                            <MessageSquare className="w-3 h-3" />
+                            WhatsApp intake
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold bg-sky-950/80 text-sky-300 border border-sky-800/80">
-                            <Send className="w-3.5 h-3.5 text-sky-400" />
-                            @Telegram Bot
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-[#122227] text-[#38bdf8] border border-[#1e3c45] font-mono-dose">
+                            <Send className="w-3 h-3" />
+                            Telegram intake
                           </span>
                         )}
 
-                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">
-                          <Sparkles className="w-3.5 h-3.5 text-sky-400" />
-                          AI Summary
-                        </span>
-
                         {item.requiredCareTag && (
-                          <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800/70 text-slate-300 border border-slate-700/60">
+                          <span className="px-2 py-0.5 rounded bg-[#182625] text-[#c6d6d2] border border-[#273d39] font-mono-dose text-[11px]">
                             {item.requiredCareTag}
                           </span>
                         )}
                       </div>
 
-                      <p className="text-base font-semibold text-slate-100 leading-snug">
-                        {item.aiSummary || 'Assistance requested'}
+                      <p className="text-sm font-semibold text-[#f0f5f4] leading-snug font-sans">
+                        {item.aiSummary || 'Community care assistance requested'}
                       </p>
 
-                      {/* Collapsible original message */}
+                      {/* Original verbatim quote (collapsible) */}
                       {originalMsg && (
-                        <div className="pt-1">
+                        <div className="pt-0.5">
                           <button
                             onClick={() => toggleExpand(item.id)}
-                            className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-200 transition-colors font-medium"
+                            className="inline-flex items-center gap-1 text-xs text-[#809692] hover:text-[#c6d6d2] transition-colors"
                           >
-                            <span>
-                              {isExpanded ? 'Hide original message' : 'View original message'}
-                            </span>
-                            {isExpanded ? (
-                              <ChevronUp className="w-3.5 h-3.5" />
-                            ) : (
-                              <ChevronDown className="w-3.5 h-3.5" />
-                            )}
+                            <span>{isExpanded ? 'Hide verbatim text' : 'Inspect verbatim text'}</span>
+                            {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                           </button>
 
                           {isExpanded && (
-                            <div className="mt-2.5 p-3.5 bg-slate-950/80 rounded-2xl border border-slate-800 text-xs text-slate-300 italic leading-relaxed">
+                            <div className="mt-2 p-3 bg-[#0c1313] rounded-lg border border-[#20312f] text-xs text-[#9eb1ad] italic font-sans leading-relaxed">
                               "{originalMsg}"
                             </div>
                           )}
@@ -313,149 +281,107 @@ export const TriageInbox: React.FC<TriageInboxProps> = ({
                     </div>
                   </div>
 
-                  {/* Right Side: The "Magic Match" Box (Cols 8-12) */}
-                  <div className="lg:col-span-5">
-                    {matchedVol ? (
-                      <div
-                        className={`rounded-2xl p-5 space-y-3.5 border ${
-                          isWhatsApp
-                            ? 'bg-emerald-950/25 border-emerald-800/50'
-                            : 'bg-sky-950/30 border-sky-800/60'
-                        }`}
+                  {/* Right Side: Matched Helper Compartment (Divided by subtle vertical border) */}
+                  <div className="lg:col-span-5 border-t lg:border-t-0 lg:border-l border-[#20312f] pt-4 lg:pt-0 lg:pl-5 space-y-3">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-medium text-[#809692] font-sans">Matched volunteer</span>
+                      <button
+                        onClick={() => onChangeHelper(item)}
+                        className="text-xs text-[#10b981] hover:underline font-mono-dose"
                       >
-                        <div className="flex items-center justify-between">
-                          <span
-                            className={`text-xs font-bold tracking-wide uppercase flex items-center gap-1.5 ${
-                              isWhatsApp ? 'text-emerald-300' : 'text-sky-300'
-                            }`}
-                          >
-                            <Sparkles className="w-3.5 h-3.5" />
-                            #1 Matched Volunteer
-                          </span>
-                          <button
-                            onClick={() => onChangeHelper(item)}
-                            className={`text-xs font-semibold hover:underline transition-colors ${
-                              isWhatsApp
-                                ? 'text-emerald-400 hover:text-emerald-300'
-                                : 'text-sky-400 hover:text-sky-300'
-                            }`}
-                          >
-                            Change helper
-                          </button>
-                        </div>
+                        Change helper
+                      </button>
+                    </div>
 
-                        {/* Volunteer info */}
-                        <div className="flex items-center gap-3.5">
-                          <img
-                            src={matchedVol.avatar}
-                            alt={matchedVol.name}
-                            className="w-12 h-12 rounded-xl object-cover ring-2 ring-slate-800 shadow-sm"
-                          />
-                          <div className="min-w-0 flex-1">
-                            <div className="text-base font-bold text-white truncate">
-                              {matchedVol.name}
-                            </div>
-                            <div className="text-xs text-slate-400 truncate mt-0.5">
-                              <span
-                                className={`font-semibold ${
-                                  isWhatsApp ? 'text-emerald-400' : 'text-sky-400'
-                                }`}
-                              >
-                                {matchedVol.distanceKm} km away
-                              </span>
-                              {' • '}
-                              <span>{matchedVol.verifiedSkills[0] || 'Verified'}</span>
-                            </div>
-                          </div>
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={matchedVol.avatar}
+                        alt={matchedVol.name}
+                        className="w-10 h-10 rounded-lg object-cover border border-[#2b3f3c]"
+                      />
+                      <div className="min-w-0 flex-1">
+                        <div className="text-sm font-bold text-[#f0f5f4] truncate font-display">
+                          {matchedVol.name}
                         </div>
+                        <div className="text-xs text-[#809692] truncate font-mono-dose">
+                          <span className="text-[#a7f3d0]">{matchedVol.distanceKm} km away</span>
+                          {' • '}
+                          <span>{matchedVol.verifiedSkills[0] || 'Verified'}</span>
+                        </div>
+                      </div>
+                    </div>
 
-                        {/* Single 1-Click Assign Button */}
-                        <button
-                          onClick={() => onAssignVolunteer(item, matchedVol)}
-                          className={`w-full flex items-center justify-center gap-2 px-5 py-3 text-white rounded-xl font-bold text-sm shadow-md active:scale-[0.98] transition-all ${
-                            isWhatsApp
-                              ? 'bg-emerald-600 hover:bg-emerald-500 shadow-emerald-600/25'
-                              : 'bg-sky-500 hover:bg-sky-400 shadow-sky-500/25'
-                          }`}
-                        >
-                          <UserCheck className="w-4 h-4" />
-                          <span>Assign {matchedVol.name.split(' ')[0]}</span>
-                          <ArrowRight className="w-4 h-4" />
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="p-5 bg-slate-950/60 rounded-xl text-center">
-                        <p className="text-xs text-slate-400">No helper matched yet</p>
-                      </div>
-                    )}
+                    <button
+                      onClick={() => onAssignVolunteer(item, matchedVol)}
+                      className="dose-btn-primary w-full"
+                    >
+                      <UserCheck className="w-4 h-4" />
+                      <span>Dispatch {matchedVol.name.split(' ')[0]}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
                   </div>
                 </div>
-              </div>
+              </article>
             );
           }
 
           if (item.type === 'overdue_checkin') {
             return (
-              <div
+              <article
                 key={item.id}
-                className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-md hover:border-slate-700 transition-all animate-fade-in"
+                className="dose-tray p-5 transition-transform duration-100 ease-out hover:border-[#334c48]"
               >
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
-                  {/* Left: Resident & overdue context */}
-                  <div className="flex items-center gap-4">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                  <div className="flex items-center gap-3.5">
                     <button
                       onClick={() => onOpenResidentPassport(item.residentId)}
-                      className="shrink-0 group"
+                      className="shrink-0"
                     >
                       <img
                         src={item.residentAvatar}
                         alt={item.residentName}
-                        className="w-14 h-14 rounded-2xl object-cover ring-2 ring-slate-800 group-hover:ring-sky-400 transition-all shadow-sm"
+                        className="w-12 h-12 rounded-xl object-cover border border-[#2b3f3c]"
                       />
                     </button>
 
-                    <div className="space-y-1.5">
-                      <div className="flex flex-wrap items-center gap-2.5">
+                    <div className="space-y-0.5">
+                      <div className="flex items-center gap-2">
                         <button
                           onClick={() => onOpenResidentPassport(item.residentId)}
-                          className="text-lg font-bold text-white hover:text-sky-400 transition-colors"
+                          className="text-base font-bold text-[#f0f5f4] hover:text-[#10b981] transition-colors font-display"
                         >
                           {item.residentName}
                         </button>
-                        <span className="text-sm text-slate-400">• {item.residentAge}yo</span>
-                        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-amber-950/80 text-amber-300 border border-amber-800/80">
-                          <Clock className="w-3.5 h-3.5 text-amber-400" />
+                        <span className="text-xs text-[#809692] font-mono-dose">{item.residentAge} yrs</span>
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-mono-dose bg-[#2c1d11] text-[#fcd34d] border border-[#78350f]">
+                          <Clock className="w-3 h-3 text-[#f59e0b]" />
                           {item.overdueDuration}
                         </span>
                       </div>
 
-                      <p className="text-sm text-slate-400">
+                      <p className="text-xs text-[#9eb1ad] font-sans">
                         {item.lastNotes || 'Check-in overdue. Routine vitals and well-being check.'}
                       </p>
 
                       {item.nokContact && (
-                        <div className="text-xs text-slate-500">
-                          Next of Kin:{' '}
-                          <span className="text-slate-300 font-medium">
-                            {item.nokContact.name} ({item.nokContact.phone})
-                          </span>
+                        <div className="text-xs text-[#738a86] font-mono-dose">
+                          Next of kin: <span className="text-[#c6d6d2]">{item.nokContact.name} ({item.nokContact.phone})</span>
                         </div>
                       )}
                     </div>
                   </div>
 
-                  {/* Right: Quick Action */}
                   <div className="shrink-0 flex items-center">
                     <button
                       onClick={() => onOpenQuickCheckIn(item)}
-                      className="w-full md:w-auto flex items-center justify-center gap-2 px-5 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold border border-slate-700 shadow-sm active:scale-[0.98] transition-all"
+                      className="dose-btn-secondary w-full md:w-auto"
                     >
-                      <PhoneCall className="w-4 h-4 text-sky-400" />
-                      <span>Quick Check-In</span>
+                      <PhoneCall className="w-3.5 h-3.5 text-[#10b981]" />
+                      <span>Log quick check-in</span>
                     </button>
                   </div>
                 </div>
-              </div>
+              </article>
             );
           }
 
@@ -463,15 +389,13 @@ export const TriageInbox: React.FC<TriageInboxProps> = ({
         })}
 
         {filteredItems.length === 0 && (
-          <div className="bg-slate-900 border border-dashed border-slate-800 rounded-3xl p-14 text-center space-y-3.5">
-            <div className="w-14 h-14 rounded-full bg-emerald-950/60 border border-emerald-800/60 text-emerald-400 flex items-center justify-center mx-auto">
-              <CheckCircle2 className="w-7 h-7" />
-            </div>
-            <h3 className="text-lg font-bold text-white">
-              All caught up in this view!
+          <div className="p-12 text-center border border-dashed border-[#20312f] rounded-xl space-y-2">
+            <CheckCircle2 className="w-8 h-8 text-[#10b981] mx-auto" />
+            <h3 className="text-base font-bold text-[#f0f5f4] font-display">
+              All items addressed in this filter
             </h3>
-            <p className="text-sm text-slate-400 max-w-sm mx-auto">
-              No items require attention in this category right now. You can test new incoming alerts using the Telegram or WhatsApp test buttons.
+            <p className="text-xs text-[#809692] font-sans max-w-sm mx-auto">
+              No tasks currently pending review. Test incoming requests using the Telegram or WhatsApp simulation buttons.
             </p>
           </div>
         )}

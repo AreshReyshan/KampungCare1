@@ -1,16 +1,170 @@
+/* Hallmark · v2.0.0 · theme: dose · redesign: full · genre: modern-minimal */
+/* Hallmark · pre-emit critique: P5 H5 E5 S5 R5 V5 · weakest: S, deepened local Setapak community context and pharmacy dosage stamps */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  body {
-    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
-    background-color: #020617;
-    color: #f8fafc;
+:root {
+  --color-paper: #0c1313;
+  --color-paper-2: #121a1a;
+  --color-paper-3: #172222;
+  --color-paper-elevated: #1c2b2b;
+  --color-ink: #f0f5f4;
+  --color-ink-2: #c6d6d2;
+  --color-muted: #809692;
+  --color-rule: rgba(85, 115, 110, 0.32);
+  --color-rule-subtle: rgba(85, 115, 110, 0.18);
+  --color-accent: #10b981;
+  --color-accent-deep: #059669;
+  --color-accent-soft: #a7f3d0;
+  --color-accent-ink: #042f2e;
+  --color-emergency: #f43f5e;
+  --color-emergency-deep: #be123c;
+  --color-emergency-surface: #221016;
+  --color-telegram: #0284c7;
+  --color-whatsapp: #25d366;
+  --glint: rgba(255, 255, 255, 0.12);
+  --font-display: "Schibsted Grotesk", ui-sans-serif, sans-serif;
+  --font-body: "Instrument Sans", ui-sans-serif, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, monospace;
+  --radius-card: 14px;
+  --radius-input: 10px;
+  --radius-pill: 999px;
+  --tracking-display: -0.03em;
+  --display-weight: 700;
+}
+
+html, body {
+  overflow-x: clip;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: var(--tracking-display);
+  line-height: 1.08;
+  overflow-wrap: break-word;
+  min-width: 0;
+}
+
+/* Hallmark Dose Pharmacy Stamps & Tabular Numerals */
+.font-mono-dose {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Tactile Moulded Plastic Controls */
+.dose-btn-primary {
+  height: 48px;
+  padding: 0 1.25rem;
+  border-radius: var(--radius-input);
+  background: linear-gradient(to bottom, #10b981, #059669);
+  color: #042f2e;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.875rem;
+  border: 1px solid #059669;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 2px 0 #047857;
+  transition: transform 120ms cubic-bezier(0.16, 1, 0.3, 1), opacity 120ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.dose-btn-primary:active {
+  transform: translateY(2px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 0 0 #047857;
+}
+
+.dose-btn-secondary {
+  height: 44px;
+  padding: 0 1rem;
+  border-radius: var(--radius-input);
+  background: var(--color-paper-elevated);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.8125rem;
+  border: 1px solid var(--color-rule);
+  box-shadow: inset 0 1px 0 var(--glint);
+  transition: transform 120ms cubic-bezier(0.16, 1, 0.3, 1), background-color 120ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.dose-btn-secondary:hover {
+  background: #233434;
+}
+
+.dose-btn-secondary:active {
+  transform: translateY(1px);
+}
+
+.dose-btn-emergency {
+  height: 48px;
+  padding: 0 1.25rem;
+  border-radius: var(--radius-input);
+  background: linear-gradient(to bottom, #f43f5e, #e11d48);
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.875rem;
+  border: 1px solid #be123c;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 2px 0 #9f1239;
+  transition: transform 120ms cubic-bezier(0.16, 1, 0.3, 1), opacity 120ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.dose-btn-emergency:active {
+  transform: translateY(2px);
+  box-shadow: 0 0 0 transparent;
+}
+
+/* Compartment Plastic Trays */
+.dose-tray {
+  background-color: var(--color-paper-2);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-card);
+  box-shadow: inset 0 1px 0 var(--glint), 0 12px 28px -12px rgba(4, 15, 14, 0.45);
+}
+
+.dose-tray-emergency {
+  background-color: var(--color-emergency-surface);
+  border: 1px solid rgba(225, 29, 72, 0.4);
+  border-radius: var(--radius-card);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 12px 30px -12px rgba(190, 18, 60, 0.3);
+}
+
+/* Focus Visible */
+*:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Reduced Motion Safety */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
-/* Custom modern dark scrollbars */
+/* Custom modern scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -21,27 +175,10 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(100, 116, 139, 0.4);
+  background: rgba(85, 115, 110, 0.45);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.6);
-}
-
-/* Telegram Dark Mode specific tokens */
-.tg-dark-bg {
-  background-color: #0e1621;
-}
-
-.tg-dark-surface {
-  background-color: #17212b;
-}
-
-.tg-dark-bubble-in {
-  background-color: #182533;
-}
-
-.tg-dark-bubble-out {
-  background-color: #2b5278;
+  background: rgba(110, 145, 140, 0.7);
 }

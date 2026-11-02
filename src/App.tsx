@@ -577,7 +577,7 @@ export function App() {
   const selectedResident = residents.find((r) => r.id === selectedResidentId) || null;
 
   return (
-    <div className="flex h-screen bg-slate-950 text-slate-100 overflow-hidden font-sans">
+    <div className="flex h-screen bg-[#0c1313] text-[#ecf4f2] overflow-hidden font-sans">
       {/* Sleek Left Sidebar (Wider & Bolder) */}
       <Sidebar
         currentTab={currentTab}

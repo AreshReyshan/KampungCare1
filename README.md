@@ -123,6 +123,7 @@ The app comes pre-seeded with realistic Setapak & Taman Melati senior residents 
 | **Vite 8** | Lightning-fast HMR and bundle compilation (<2 seconds) |
 | **Lucide React** | Clean, minimalist iconography (Linear / Apple Health aesthetic) |
 | **Canvas Confetti** | Tactile feedback celebration upon task completion |
+| **Hallmark Design System** | Anti-AI-slop design system using the **`Dose`** medical & care palette (`#0c1313` paper, pharmacy green `#10b981`, mint `#a7f3d0`, moulded plastic controls, `Schibsted Grotesk` display + `DM Mono` tabular numbers) |
 
 ### Directory Structure
 ```

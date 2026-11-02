@@ -30,38 +30,38 @@ export const VolunteersGrid: React.FC<VolunteersGridProps> = ({
 
   return (
     <div className="space-y-6 max-w-6xl mx-auto">
-      <div className="flex items-center justify-between text-sm text-slate-400">
-        <span>{filteredVolunteers.length} verified community volunteers active in Setapak</span>
-        <span className="text-xs text-slate-500">All volunteers are identity &amp; background verified</span>
+      <div className="flex items-center justify-between text-xs text-[#809692] font-mono-dose">
+        <span>Verified community helpers: {filteredVolunteers.length} registered in Setapak</span>
+        <span>Identity &amp; background clearance verified</span>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {filteredVolunteers.map((vol) => {
           const isOnline = vol.status === 'available';
           const isOnVisit = vol.status === 'on_visit';
 
           return (
-            <div
+            <article
               key={vol.id}
-              className="bg-slate-900 border border-slate-800 rounded-3xl p-7 shadow-md hover:border-slate-700 transition-all flex flex-col justify-between"
+              className="dose-tray p-6 flex flex-col justify-between space-y-4 hover:border-[#38534f] transition-transform duration-100 ease-out"
             >
-              <div>
+              <div className="space-y-4">
                 {/* Header: Avatar, Name & Proximity */}
                 <div className="flex items-start justify-between gap-4">
-                  <div className="flex items-center gap-4">
-                    <div className="relative">
+                  <div className="flex items-center gap-3.5">
+                    <div className="relative shrink-0">
                       <img
                         src={vol.avatar}
                         alt={vol.name}
-                        className="w-16 h-16 rounded-2xl object-cover ring-2 ring-slate-800 shadow-md"
+                        className="w-14 h-14 rounded-xl object-cover border border-[#2b3f3c]"
                       />
                       <span
-                        className={`absolute -bottom-1 -right-1 w-4 h-4 rounded-full ring-2 ring-slate-900 ${
+                        className={`absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full border-2 border-[#121c1c] ${
                           isOnline
-                            ? 'bg-emerald-500'
+                            ? 'bg-[#10b981]'
                             : isOnVisit
-                            ? 'bg-amber-500'
-                            : 'bg-slate-500'
+                            ? 'bg-[#f59e0b]'
+                            : 'bg-[#556b67]'
                         }`}
                         title={vol.status}
                       />
@@ -69,50 +69,49 @@ export const VolunteersGrid: React.FC<VolunteersGridProps> = ({
 
                     <div>
                       <div className="flex items-center gap-2">
-                        <h3 className="text-lg font-bold text-white">{vol.name}</h3>
-                        <span className="text-sm text-slate-400">({vol.age}yo)</span>
+                        <h3 className="text-base font-bold text-[#f0f5f4] font-display">{vol.name}</h3>
+                        <span className="text-xs text-[#809692] font-mono-dose">({vol.age} yrs)</span>
                       </div>
-                      <div className="flex items-center gap-2 text-xs text-slate-400 mt-1">
-                        <span className="font-bold text-sky-400 bg-sky-950/80 border border-sky-800/80 px-2.5 py-0.5 rounded-md">
+                      <div className="flex items-center gap-2 text-xs text-[#809692] mt-0.5 font-mono-dose">
+                        <span className="text-[#a7f3d0] font-semibold">
                           {vol.distanceKm} km away
                         </span>
                         <span>•</span>
-                        <span className="text-slate-400">{vol.neighborhood}</span>
+                        <span>{vol.neighborhood}</span>
                       </div>
                     </div>
                   </div>
 
-                  {/* Status Pill */}
                   <span
-                    className={`px-3 py-1 rounded-full text-xs font-bold ${
+                    className={`px-2.5 py-0.5 rounded text-xs font-mono-dose ${
                       isOnline
-                        ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-800/80'
+                        ? 'bg-[#142e27] text-[#6ee7b7] border border-[#205244]'
                         : isOnVisit
-                        ? 'bg-amber-950/80 text-amber-300 border border-amber-800/80'
-                        : 'bg-slate-800 text-slate-400'
+                        ? 'bg-[#2b1d11] text-[#fcd34d] border border-[#78350f]'
+                        : 'bg-[#182625] text-[#809692] border border-[#233533]'
                     }`}
                   >
-                    {isOnline ? 'Available Now' : isOnVisit ? 'On Visit' : 'Offline'}
+                    {isOnline ? 'Available now' : isOnVisit ? 'On care visit' : 'Off-duty'}
                   </span>
                 </div>
 
                 {/* Bio */}
-                <p className="mt-4 text-sm text-slate-300 line-clamp-2 leading-relaxed">
+                <p className="text-xs text-[#9eb1ad] font-sans line-clamp-2 leading-relaxed">
                   {vol.bio}
                 </p>
 
                 {/* Verified Skills */}
-                <div className="mt-4 space-y-2">
-                  <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-                    Verified Competencies
+                <div className="space-y-1.5">
+                  <div className="text-[11px] font-medium text-[#738a86] font-sans">
+                    Verified competencies
                   </div>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-1.5">
                     {vol.verifiedSkills.map((skill) => (
                       <span
                         key={skill}
-                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-semibold bg-slate-950/70 text-slate-300 border border-slate-800"
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-mono-dose bg-[#0c1313] text-[#c6d6d2] border border-[#20312f]"
                       >
-                        <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                        <ShieldCheck className="w-3.5 h-3.5 text-[#10b981]" />
                         {skill}
                       </span>
                     ))}
@@ -120,55 +119,55 @@ export const VolunteersGrid: React.FC<VolunteersGridProps> = ({
                 </div>
 
                 {/* Languages */}
-                <div className="mt-3.5 flex items-center gap-2 text-xs text-slate-400">
-                  <span className="text-slate-500">Languages:</span>
+                <div className="flex items-center gap-1.5 text-xs text-[#738a86] font-sans">
+                  <span>Languages:</span>
                   {vol.languages.map((l) => (
-                    <span key={l} className="bg-slate-800 text-slate-300 px-2.5 py-0.5 rounded-md text-xs">
+                    <span key={l} className="bg-[#0c1313] text-[#809692] border border-[#1e2d2b] px-2 py-0.5 rounded text-[11px]">
                       {l}
                     </span>
                   ))}
                 </div>
               </div>
 
-              {/* Footer stats & Direct Dispatch Buttons */}
-              <div className="mt-5 pt-4 border-t border-slate-800 flex items-center justify-between text-xs">
-                <div className="flex items-center gap-3 text-slate-300 font-medium">
-                  <span className="flex items-center gap-1 text-amber-400">
-                    <Star className="w-4 h-4 fill-current" />
-                    <span className="font-bold text-white text-sm">{vol.rating}</span>
+              {/* Footer stats & Direct Connect Buttons */}
+              <div className="pt-3 border-t border-[#20312f] flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2.5 text-[#809692] font-mono-dose">
+                  <span className="flex items-center gap-1 text-[#fcd34d]">
+                    <Star className="w-3.5 h-3.5 fill-current" />
+                    <span className="font-bold text-[#f0f5f4]">{vol.rating}</span>
                   </span>
                   <span>•</span>
-                  <span>{vol.completedVisits} visits</span>
+                  <span>{vol.completedVisits} visits logged</span>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => onContactVolunteer(vol, 'telegram')}
-                    className="inline-flex items-center gap-1 px-3 py-1.5 bg-sky-950 hover:bg-sky-900 text-sky-300 border border-sky-800/80 rounded-xl text-xs font-semibold transition-colors"
+                    className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-[#122227] hover:bg-[#182c33] text-[#38bdf8] border border-[#1e3c45] rounded-lg text-xs font-mono-dose active:translate-y-0.5 transition-transform duration-100 ease-out"
                     title={`Message ${vol.name} via Telegram`}
                   >
-                    <Send className="w-3 h-3 text-sky-400" />
+                    <Send className="w-3 h-3 text-[#38bdf8]" />
                     <span>Telegram</span>
                   </button>
 
                   <button
                     onClick={() => onContactVolunteer(vol, 'whatsapp')}
-                    className="inline-flex items-center gap-1 px-3 py-1.5 bg-emerald-950 hover:bg-emerald-900 text-emerald-300 border border-emerald-800/80 rounded-xl text-xs font-semibold transition-colors"
+                    className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-[#12241f] hover:bg-[#172e27] text-[#4ade80] border border-[#1d4137] rounded-lg text-xs font-mono-dose active:translate-y-0.5 transition-transform duration-100 ease-out"
                     title={`Message ${vol.name} via WhatsApp`}
                   >
-                    <MessageSquare className="w-3 h-3 text-emerald-400" />
+                    <MessageSquare className="w-3 h-3 text-[#4ade80]" />
                     <span>WhatsApp</span>
                   </button>
                 </div>
               </div>
-            </div>
+            </article>
           );
         })}
 
         {filteredVolunteers.length === 0 && (
-          <div className="col-span-2 bg-slate-900 border border-dashed border-slate-800 rounded-3xl p-14 text-center">
-            <p className="text-base font-bold text-slate-300">No volunteers match your search</p>
-            <p className="text-xs text-slate-500 mt-1">Try searching by skill name, language, or neighbourhood</p>
+          <div className="col-span-2 p-12 text-center border border-dashed border-[#20312f] rounded-xl">
+            <p className="text-sm font-semibold text-[#f0f5f4] font-display">No volunteers match this query</p>
+            <p className="text-xs text-[#809692] font-sans mt-1">Try filtering by skill, neighborhood, or language</p>
           </div>
         )}
       </div>
