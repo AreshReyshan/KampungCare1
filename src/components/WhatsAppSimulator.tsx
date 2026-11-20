@@ -49,14 +49,14 @@ export const WhatsAppSimulator: React.FC<WhatsAppSimulatorProps> = ({
 
   const demoPresets = [
     {
-      id: 'clinic',
-      label: 'Clinic Escort (BM)',
-      sub: 'Mrs. Tan Ah Mooi • Walking Frame',
-      text: 'Salam KampungCare, boleh tolong aturkan sukarelawan teman Mak Cik Tan pergi Poliklinik Setapak pagi Khamis pukul 9.30? Dia pakai walking frame.',
-      tag: 'Clinic Escort'
+      id: 'wound_care',
+      label: 'Home Nurse Dressing (EN)',
+      sub: 'Madam Devi • Diabetic Ulcer',
+      text: 'Good morning KampungCare, Madam Devi here from Gombak Setia. Need nurse volunteer for routine diabetic wound dressing change today.',
+      tag: 'Medical'
     },
     {
-      id: 'grocery',
+      id: 'groceries',
       label: 'Grocery Assistance (EN)',
       sub: 'Uncle Lim • PV 15 Platinum Lake',
       text: 'Good day, Uncle Lim here from PV15. Can someone help buy bread, eggs and low-sugar soy milk tomorrow morning?',
@@ -75,20 +75,20 @@ export const WhatsAppSimulator: React.FC<WhatsAppSimulatorProps> = ({
     <div className="fixed inset-0 z-50 overflow-hidden">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-slate-950/70 backdrop-blur-sm transition-opacity animate-fade-in"
+        className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity animate-fade-in"
         onClick={onClose}
       />
 
       {/* WhatsApp Device Drawer */}
-      <div className="absolute inset-y-0 right-0 max-w-lg w-full bg-[#0b141a] text-slate-100 shadow-2xl flex flex-col z-10 animate-slide-in-right border-l border-emerald-950/60">
+      <div className="absolute inset-y-0 right-0 max-w-lg w-full bg-white text-slate-900 shadow-2xl flex flex-col z-10 animate-slide-in-right border-l border-slate-200">
         {/* WhatsApp Header */}
-        <div className="px-5 py-3.5 bg-[#1f2c34] text-white flex items-center justify-between shadow-md shrink-0 border-b border-[#2a3942]">
+        <div className="px-5 py-3.5 bg-[#075e54] text-white flex items-center justify-between shadow-md shrink-0 border-b border-[#054c44]">
           <div className="flex items-center gap-3.5">
             <div className="relative">
-              <div className="w-11 h-11 rounded-full bg-emerald-600 flex items-center justify-center font-bold text-lg text-white shadow-inner ring-2 ring-emerald-500/40">
+              <div className="w-11 h-11 rounded-full bg-white/20 flex items-center justify-center font-bold text-lg text-white shadow-inner ring-2 ring-white/30 backdrop-blur-xs">
                 <MessageSquare className="w-6 h-6 fill-current" />
               </div>
-              <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-400 ring-2 ring-[#1f2c34]"></span>
+              <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-400 ring-2 ring-[#075e54]"></span>
             </div>
 
             <div>
@@ -96,14 +96,14 @@ export const WhatsAppSimulator: React.FC<WhatsAppSimulatorProps> = ({
                 <h3 className="font-display font-semibold text-base tracking-tight text-white">
                   KampungCare Careline
                 </h3>
-                <span className="font-mono bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-0.5 rounded-md font-medium border border-emerald-500/30">
+                <span className="font-mono bg-white/20 text-white text-[10px] px-2 py-0.5 rounded-md font-semibold">
                   Official
                 </span>
               </div>
-              <p className="text-xs text-slate-400 flex items-center gap-1.5 font-mono text-[11px]">
-                <span className="text-emerald-400">WhatsApp Business</span>
+              <p className="text-xs text-emerald-100 flex items-center gap-1.5 font-mono text-[11px]">
+                <span className="text-white font-medium">WhatsApp Business</span>
                 <span>•</span>
-                <span>+60 11-KAMPUNG</span>
+                <span className="text-emerald-200">+60 11-KAMPUNG</span>
               </p>
             </div>
           </div>
@@ -111,7 +111,7 @@ export const WhatsAppSimulator: React.FC<WhatsAppSimulatorProps> = ({
           <div className="flex items-center gap-2">
             <button
               onClick={onClose}
-              className="w-9 h-9 rounded-full hover:bg-slate-700/60 flex items-center justify-center text-slate-300 hover:text-white transition-colors"
+              className="w-9 h-9 rounded-full hover:bg-white/10 flex items-center justify-center text-white transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -119,13 +119,13 @@ export const WhatsAppSimulator: React.FC<WhatsAppSimulatorProps> = ({
         </div>
 
         {/* Quick Demo Presets Banner */}
-        <div className="bg-[#111b21] border-b border-[#222d34] p-3.5 space-y-2 shrink-0">
+        <div className="bg-emerald-50/60 border-b border-emerald-100 p-3.5 space-y-2 shrink-0">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-emerald-300 flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+            <span className="text-xs font-semibold text-emerald-800 flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
               Quick demo presets
             </span>
-            <span className="text-[11px] text-slate-400 font-mono">Tap to test live bot</span>
+            <span className="text-[11px] text-slate-500 font-mono">Tap to test live bot</span>
           </div>
 
           <div className="grid grid-cols-1 gap-2">
@@ -136,21 +136,21 @@ export const WhatsAppSimulator: React.FC<WhatsAppSimulatorProps> = ({
                 <button
                   key={preset.id}
                   onClick={() => handleSend(preset.text)}
-                  className={`text-left p-2.5 rounded-xl border transition-[background-color,border-color] flex items-center justify-between text-xs ${
+                  className={`text-left p-2.5 rounded-xl border transition-all flex items-center justify-between text-xs shadow-2xs ${
                     isEm
-                      ? 'bg-rose-950/40 hover:bg-rose-900/50 border-rose-800/80 text-rose-200'
-                      : 'bg-[#1f2c34] hover:bg-[#26353d] border-[#2f3d46] text-slate-200'
+                      ? 'bg-pink-50 hover:bg-pink-100/80 border-pink-200 text-pink-900'
+                      : 'bg-white hover:bg-emerald-50 border-slate-200 text-slate-800'
                   }`}
                 >
                   <div className="min-w-0 pr-3">
-                    <div className="font-semibold text-xs truncate text-slate-100">{preset.label}</div>
-                    <div className="text-[11px] text-slate-400 truncate">{preset.sub}</div>
+                    <div className="font-semibold text-xs truncate text-slate-900">{preset.label}</div>
+                    <div className="text-[11px] text-slate-500 truncate">{preset.sub}</div>
                   </div>
                   <span
-                    className={`shrink-0 px-2.5 py-1 rounded-md text-[11px] font-mono font-medium ${
+                    className={`shrink-0 px-2.5 py-1 rounded-lg text-[11px] font-mono font-medium ${
                       isEm
-                        ? 'bg-rose-600 text-white shadow-xs'
-                        : 'bg-emerald-600 text-white shadow-xs'
+                        ? 'bg-[#ec4899] text-white shadow-2xs font-bold'
+                        : 'bg-emerald-600 text-white shadow-2xs font-semibold'
                     }`}
                   >
                     Send preset
@@ -163,18 +163,17 @@ export const WhatsAppSimulator: React.FC<WhatsAppSimulatorProps> = ({
 
         {/* WhatsApp Chat Feed */}
         <div 
-          className="flex-1 overflow-y-auto p-5 space-y-3.5"
+          className="flex-1 overflow-y-auto p-5 space-y-3.5 bg-[#efeae2]"
           style={{
-            backgroundImage: `radial-gradient(rgba(37, 211, 102, 0.05) 1px, transparent 1px)`,
+            backgroundImage: `radial-gradient(rgba(7, 94, 84, 0.08) 1px, transparent 1px)`,
             backgroundSize: '20px 20px',
-            backgroundColor: '#0b141a'
           }}
         >
           {messages.map((msg) => {
             if (msg.sender === 'system') {
               return (
                 <div key={msg.id} className="flex justify-center my-3">
-                  <div className="bg-[#182229] border border-[#222d34] text-slate-400 text-xs px-4 py-1.5 rounded-xl max-w-sm text-center shadow-xs leading-relaxed">
+                  <div className="bg-white/90 border border-slate-200 text-slate-600 text-xs px-4 py-1.5 rounded-xl max-w-sm text-center shadow-xs leading-relaxed">
                     🔒 {msg.text}
                   </div>
                 </div>
@@ -190,26 +189,26 @@ export const WhatsAppSimulator: React.FC<WhatsAppSimulatorProps> = ({
                 className={`flex flex-col ${isUser ? 'items-end' : 'items-start'} animate-fade-in`}
               >
                 <div
-                  className={`max-w-[85%] rounded-2xl px-4 py-3 text-xs leading-relaxed shadow-sm relative ${
+                  className={`max-w-[85%] rounded-2xl px-4 py-3 text-xs leading-relaxed shadow-2xs relative ${
                     isUser
-                      ? 'bg-[#005c4b] text-white rounded-tr-xs'
+                      ? 'bg-[#d9fdd3] text-slate-900 rounded-tr-xs border border-emerald-200/60'
                       : isEm
-                      ? 'bg-rose-950/80 border border-rose-500/60 text-rose-100 font-medium rounded-tl-xs'
-                      : 'bg-[#202c33] text-slate-100 rounded-tl-xs border border-[#2a3942]'
+                      ? 'bg-pink-50 border border-pink-300 text-pink-950 font-medium rounded-tl-xs shadow-xs'
+                      : 'bg-white text-slate-900 rounded-tl-xs border border-slate-200 shadow-2xs'
                   }`}
                 >
                   {!isUser && (
-                    <div className="text-[11px] font-bold text-emerald-400 mb-1 flex items-center gap-1">
+                    <div className="text-[11px] font-bold text-emerald-700 mb-1 flex items-center gap-1">
                       <span>{msg.senderName}</span>
-                      <span className="text-[9px] bg-emerald-950 text-emerald-300 px-1 rounded">BOT</span>
+                      <span className="text-[9px] bg-emerald-100 text-emerald-800 px-1 rounded font-mono font-semibold">BOT</span>
                     </div>
                   )}
 
                   <p className="whitespace-pre-wrap text-sm leading-relaxed">{msg.text}</p>
 
-                  <div className="flex items-center justify-end gap-1.5 mt-1.5 text-[11px] text-slate-300/80 font-mono">
+                  <div className="flex items-center justify-end gap-1.5 mt-1.5 text-[11px] text-slate-500 font-mono">
                     <span>{msg.time}</span>
-                    {isUser && <CheckCheck className="w-3.5 h-3.5 text-sky-400" />}
+                    {isUser && <CheckCheck className="w-3.5 h-3.5 text-sky-500" />}
                   </div>
                 </div>
               </div>
@@ -220,7 +219,7 @@ export const WhatsAppSimulator: React.FC<WhatsAppSimulatorProps> = ({
         </div>
 
         {/* WhatsApp Chat Input Bar */}
-        <div className="p-3.5 bg-[#1f2c34] border-t border-[#2a3942] shrink-0">
+        <div className="p-3.5 bg-white border-t border-slate-200 shrink-0">
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -230,7 +229,7 @@ export const WhatsAppSimulator: React.FC<WhatsAppSimulatorProps> = ({
           >
             <button
               type="button"
-              className="p-2 text-slate-400 hover:text-slate-200 transition-colors"
+              className="p-2 text-slate-400 hover:text-slate-600 transition-colors"
               title="Emoji"
             >
               <Smile className="w-5 h-5" />
@@ -238,7 +237,7 @@ export const WhatsAppSimulator: React.FC<WhatsAppSimulatorProps> = ({
 
             <button
               type="button"
-              className="p-2 text-slate-400 hover:text-slate-200 transition-colors"
+              className="p-2 text-slate-400 hover:text-slate-600 transition-colors"
               title="Attach photo/prescription"
             >
               <Paperclip className="w-5 h-5" />
@@ -249,7 +248,7 @@ export const WhatsAppSimulator: React.FC<WhatsAppSimulatorProps> = ({
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               placeholder="Message KampungCare Careline..."
-              className="flex-1 bg-[#2a3942] text-sm text-white placeholder-slate-400 px-4 py-2.5 rounded-2xl focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
+              className="flex-1 bg-slate-50 text-sm text-slate-900 placeholder-slate-400 border border-slate-200 px-4 py-2.5 rounded-2xl focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:bg-white shadow-inner transition-all"
             />
 
             {inputText.trim() ? (
@@ -265,7 +264,7 @@ export const WhatsAppSimulator: React.FC<WhatsAppSimulatorProps> = ({
                 onClick={() => {
                   setInputText('Mak Cik Tan perlukan bantuan teman ke klinik');
                 }}
-                className="p-2 text-slate-400 hover:text-emerald-400 transition-colors"
+                className="p-2 text-slate-400 hover:text-emerald-600 transition-colors"
                 title="Voice input simulator"
               >
                 <Mic className="w-5 h-5" />
@@ -273,7 +272,7 @@ export const WhatsAppSimulator: React.FC<WhatsAppSimulatorProps> = ({
             )}
           </form>
 
-          <p className="text-[11px] text-slate-400 text-center mt-2">
+          <p className="text-[11px] text-slate-400 text-center mt-2 font-sans">
             Incoming WhatsApp messages trigger AI Triage and Volunteer Proximity Match.
           </p>
         </div>

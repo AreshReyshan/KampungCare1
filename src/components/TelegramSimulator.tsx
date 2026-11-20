@@ -73,20 +73,20 @@ export const TelegramSimulator: React.FC<TelegramSimulatorProps> = ({
     <div className="fixed inset-0 z-50 overflow-hidden">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-slate-950/70 backdrop-blur-sm transition-opacity animate-fade-in"
+        className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity animate-fade-in"
         onClick={onClose}
       />
 
       {/* Drawer Device Container */}
-      <div className="absolute inset-y-0 right-0 max-w-lg w-full bg-[#0e1621] text-slate-100 shadow-2xl flex flex-col z-10 animate-slide-in-right border-l border-slate-800">
-        {/* Telegram Header */}
-        <div className="px-5 py-3.5 bg-[#17212b] text-white flex items-center justify-between shadow-md shrink-0 border-b border-slate-800">
+      <div className="absolute inset-y-0 right-0 max-w-lg w-full bg-white text-slate-900 shadow-2xl flex flex-col z-10 animate-slide-in-right border-l border-slate-200">
+        {/* Telegram Header (Lagoon Blue) */}
+        <div className="px-5 py-3.5 bg-[#0284c7] text-white flex items-center justify-between shadow-md shrink-0 border-b border-[#0369a1]">
           <div className="flex items-center gap-3.5">
             <div className="relative">
-              <div className="w-11 h-11 rounded-full bg-sky-500 text-white flex items-center justify-center font-bold text-lg shadow-inner ring-2 ring-sky-400/30">
+              <div className="w-11 h-11 rounded-full bg-white/20 text-white flex items-center justify-center font-bold text-lg shadow-inner ring-2 ring-white/30 backdrop-blur-xs">
                 <Send className="w-5 h-5 -rotate-12 translate-x-0.5" />
               </div>
-              <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-400 ring-2 ring-[#17212b]"></span>
+              <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-400 ring-2 ring-[#0284c7]"></span>
             </div>
 
             <div>
@@ -94,14 +94,14 @@ export const TelegramSimulator: React.FC<TelegramSimulatorProps> = ({
                 <h3 className="font-display font-semibold text-base tracking-tight text-white">
                   KampungCare Bot
                 </h3>
-                <span className="font-mono bg-sky-500/20 text-sky-400 text-[10px] px-2 py-0.5 rounded-md font-medium border border-sky-500/30">
+                <span className="font-mono bg-white/20 text-white text-[10px] px-2 py-0.5 rounded-md font-semibold">
                   bot
                 </span>
               </div>
-              <p className="text-xs text-slate-400 flex items-center gap-1.5 font-mono text-[11px]">
-                <span className="text-sky-300">@KampungCareBot</span>
+              <p className="text-xs text-sky-100 flex items-center gap-1.5 font-mono text-[11px]">
+                <span className="text-white font-medium">@KampungCareBot</span>
                 <span>•</span>
-                <span className="text-emerald-400">Setapak &amp; Melati</span>
+                <span className="text-emerald-200">Setapak &amp; Melati</span>
               </p>
             </div>
           </div>
@@ -109,7 +109,7 @@ export const TelegramSimulator: React.FC<TelegramSimulatorProps> = ({
           <div className="flex items-center gap-2">
             <button
               onClick={onClose}
-              className="w-9 h-9 rounded-full hover:bg-slate-700/60 flex items-center justify-center text-slate-300 hover:text-white transition-colors"
+              className="w-9 h-9 rounded-full hover:bg-white/10 flex items-center justify-center text-white transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -117,13 +117,13 @@ export const TelegramSimulator: React.FC<TelegramSimulatorProps> = ({
         </div>
 
         {/* Quick Demo Presets Banner */}
-        <div className="bg-[#17212b]/95 border-b border-slate-800 p-3.5 space-y-2 shrink-0">
+        <div className="bg-sky-50/70 border-b border-sky-100 p-3.5 space-y-2 shrink-0">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-sky-300 flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-sky-400" />
+            <span className="text-xs font-semibold text-[#0284c7] flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-[#0284c7]" />
               Quick demo presets
             </span>
-            <span className="text-[11px] text-slate-400 font-mono">Click to test scenario</span>
+            <span className="text-[11px] text-slate-500 font-mono">Click to test scenario</span>
           </div>
 
           <div className="grid grid-cols-1 gap-2">
@@ -134,21 +134,21 @@ export const TelegramSimulator: React.FC<TelegramSimulatorProps> = ({
                 <button
                   key={preset.id}
                   onClick={() => handleSend(preset.text)}
-                  className={`text-left p-2.5 rounded-xl border transition-[background-color,border-color] flex items-center justify-between text-xs ${
+                  className={`text-left p-2.5 rounded-xl border transition-all flex items-center justify-between text-xs shadow-2xs ${
                     isEm
-                      ? 'bg-rose-950/40 hover:bg-rose-900/50 border-rose-800/80 text-rose-200'
-                      : 'bg-slate-900 hover:bg-slate-800 border-slate-800 text-slate-200'
+                      ? 'bg-pink-50 hover:bg-pink-100/80 border-pink-200 text-pink-900'
+                      : 'bg-white hover:bg-sky-50 border-slate-200 text-slate-800'
                   }`}
                 >
                   <div className="min-w-0 pr-3">
-                    <div className="font-semibold text-xs truncate text-slate-100">{preset.label}</div>
-                    <div className="text-[11px] text-slate-400 truncate">{preset.sub}</div>
+                    <div className="font-semibold text-xs truncate text-slate-900">{preset.label}</div>
+                    <div className="text-[11px] text-slate-500 truncate">{preset.sub}</div>
                   </div>
                   <span
-                    className={`shrink-0 px-2.5 py-1 rounded-md text-[11px] font-mono font-medium ${
+                    className={`shrink-0 px-2.5 py-1 rounded-lg text-[11px] font-mono font-medium ${
                       isEm
-                        ? 'bg-rose-600 text-white shadow-xs'
-                        : 'bg-sky-600 text-white shadow-xs'
+                        ? 'bg-[#ec4899] text-white shadow-2xs font-bold'
+                        : 'bg-[#0284c7] text-white shadow-2xs font-semibold'
                     }`}
                   >
                     Send preset
@@ -161,18 +161,17 @@ export const TelegramSimulator: React.FC<TelegramSimulatorProps> = ({
 
         {/* Telegram Chat Feed */}
         <div 
-          className="flex-1 overflow-y-auto p-5 space-y-3.5"
+          className="flex-1 overflow-y-auto p-5 space-y-3.5 bg-[#f0f4f8]"
           style={{
-            backgroundImage: `radial-gradient(rgba(14, 165, 233, 0.06) 1px, transparent 1px)`,
+            backgroundImage: `radial-gradient(rgba(2, 132, 199, 0.08) 1px, transparent 1px)`,
             backgroundSize: '20px 20px',
-            backgroundColor: '#0e1621'
           }}
         >
           {messages.map((msg) => {
             if (msg.sender === 'system') {
               return (
                 <div key={msg.id} className="flex justify-center my-3">
-                  <div className="bg-[#17212b] border border-slate-800 text-slate-400 text-xs px-4 py-1.5 rounded-xl max-w-sm text-center shadow-xs leading-relaxed">
+                  <div className="bg-white/90 border border-slate-200 text-slate-600 text-xs px-4 py-1.5 rounded-xl max-w-sm text-center shadow-xs leading-relaxed">
                     {msg.text}
                   </div>
                 </div>
@@ -188,25 +187,25 @@ export const TelegramSimulator: React.FC<TelegramSimulatorProps> = ({
                 className={`flex flex-col ${isUser ? 'items-end' : 'items-start'} animate-fade-in`}
               >
                 <div
-                  className={`max-w-[85%] rounded-2xl px-4 py-3 text-xs leading-relaxed shadow-sm relative ${
+                  className={`max-w-[85%] rounded-2xl px-4 py-3 text-xs leading-relaxed shadow-xs relative ${
                     isUser
-                      ? 'bg-[#2b5278] text-white rounded-tr-xs border border-sky-700/50'
+                      ? 'bg-[#0284c7] text-white rounded-tr-xs shadow-sky-500/10'
                       : isEm
-                      ? 'bg-rose-950/80 border border-rose-500/60 text-rose-100 font-medium rounded-tl-xs'
-                      : 'bg-[#182533] text-slate-100 rounded-tl-xs border border-slate-800'
+                      ? 'bg-pink-50 border border-pink-300 text-pink-950 font-medium rounded-tl-xs shadow-xs'
+                      : 'bg-white text-slate-900 rounded-tl-xs border border-slate-200 shadow-2xs'
                   }`}
                 >
                   {!isUser && (
-                    <div className="text-[11px] font-bold text-sky-400 mb-1">
+                    <div className="text-[11px] font-bold text-[#0284c7] mb-1">
                       {msg.senderName}
                     </div>
                   )}
 
                   <p className="whitespace-pre-wrap text-sm leading-relaxed">{msg.text}</p>
 
-                  <div className="flex items-center justify-end gap-1.5 mt-1.5 text-[11px] text-slate-400 font-mono">
+                  <div className={`flex items-center justify-end gap-1.5 mt-1.5 text-[11px] font-mono ${isUser ? 'text-sky-100' : 'text-slate-400'}`}>
                     <span>{msg.time}</span>
-                    {isUser && <CheckCheck className="w-3.5 h-3.5 text-sky-300" />}
+                    {isUser && <CheckCheck className="w-3.5 h-3.5 text-white" />}
                   </div>
                 </div>
               </div>
@@ -217,7 +216,7 @@ export const TelegramSimulator: React.FC<TelegramSimulatorProps> = ({
         </div>
 
         {/* Telegram Chat Input Bar */}
-        <div className="p-3.5 bg-[#17212b] border-t border-slate-800 shrink-0">
+        <div className="p-3.5 bg-white border-t border-slate-200 shrink-0">
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -227,7 +226,7 @@ export const TelegramSimulator: React.FC<TelegramSimulatorProps> = ({
           >
             <button
               type="button"
-              className="p-2 text-slate-400 hover:text-slate-200 transition-colors"
+              className="p-2 text-slate-400 hover:text-slate-600 transition-colors"
               title="Attach photo/prescription"
             >
               <Paperclip className="w-5 h-5" />
@@ -238,13 +237,13 @@ export const TelegramSimulator: React.FC<TelegramSimulatorProps> = ({
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               placeholder="Message @KampungCareBot..."
-              className="flex-1 bg-slate-900 border border-slate-800 text-sm text-white placeholder-slate-500 px-4 py-2.5 rounded-2xl focus:outline-none focus:ring-2 focus:ring-sky-500/40"
+              className="flex-1 bg-slate-50 border border-slate-200 text-sm text-slate-900 placeholder-slate-400 px-4 py-2.5 rounded-2xl focus:outline-none focus:ring-2 focus:ring-sky-500/30 focus:bg-white transition-all shadow-inner"
             />
 
             {inputText.trim() ? (
               <button
                 type="submit"
-                className="w-10 h-10 rounded-full bg-sky-500 hover:bg-sky-400 text-white flex items-center justify-center shadow-md active:scale-95 transition-all"
+                className="w-10 h-10 rounded-full bg-[#0284c7] hover:bg-[#0369a1] text-white flex items-center justify-center shadow-md active:scale-95 transition-all"
               >
                 <Send className="w-4 h-4 translate-x-0.5" />
               </button>
@@ -254,7 +253,7 @@ export const TelegramSimulator: React.FC<TelegramSimulatorProps> = ({
                 onClick={() => {
                   setInputText('Mak Cik Tan perlu bantuan ke klinik');
                 }}
-                className="p-2 text-slate-400 hover:text-sky-400 transition-colors"
+                className="p-2 text-slate-400 hover:text-[#0284c7] transition-colors"
                 title="Voice input simulator"
               >
                 <Mic className="w-5 h-5" />
@@ -262,7 +261,7 @@ export const TelegramSimulator: React.FC<TelegramSimulatorProps> = ({
             )}
           </form>
 
-          <p className="text-[11px] text-slate-400 text-center mt-2">
+          <p className="text-[11px] text-slate-400 text-center mt-2 font-sans">
             Messages automatically trigger AI Triage and Volunteer Dispatch logic.
           </p>
         </div>

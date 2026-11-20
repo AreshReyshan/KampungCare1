@@ -917,7 +917,7 @@ export function App() {
   const auditCounts = auditManager.getCounts();
 
   return (
-    <div className="flex h-screen bg-[#0c1313] text-[#ecf4f2] overflow-hidden font-sans">
+    <div className="flex h-screen bg-[#f8fafc] text-[#0f172a] overflow-hidden font-sans">
       {/* Sleek Left Sidebar */}
       <Sidebar
         currentTab={currentTab}

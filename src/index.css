@@ -1,37 +1,36 @@
-/* Hallmark · v2.0.0 · theme: dose · redesign: full · genre: modern-minimal */
-/* Hallmark · pre-emit critique: P5 H5 E5 S5 R5 V5 · weakest: S, deepened local Setapak community context and pharmacy dosage stamps */
+/* KampungCare — Lagoon Blue, Cloud White & Bubblegum Pink Theme */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --color-paper: #0c1313;
-  --color-paper-2: #121a1a;
-  --color-paper-3: #172222;
-  --color-paper-elevated: #1c2b2b;
-  --color-ink: #f0f5f4;
-  --color-ink-2: #c6d6d2;
-  --color-muted: #809692;
-  --color-rule: rgba(85, 115, 110, 0.32);
-  --color-rule-subtle: rgba(85, 115, 110, 0.18);
-  --color-accent: #10b981;
-  --color-accent-deep: #059669;
-  --color-accent-soft: #a7f3d0;
-  --color-accent-ink: #042f2e;
-  --color-emergency: #f43f5e;
-  --color-emergency-deep: #be123c;
-  --color-emergency-surface: #221016;
+  --color-paper: #f8fafc;
+  --color-paper-2: #ffffff;
+  --color-paper-3: #f1f5f9;
+  --color-paper-elevated: #ffffff;
+  --color-ink: #0f172a;
+  --color-ink-2: #334155;
+  --color-muted: #64748b;
+  --color-rule: #e2e8f0;
+  --color-rule-subtle: #f1f5f9;
+  --color-accent: #0284c7;
+  --color-accent-deep: #0369a1;
+  --color-accent-soft: #bae6fd;
+  --color-accent-ink: #0369a1;
+  --color-emergency: #ec4899;
+  --color-emergency-deep: #db2777;
+  --color-emergency-surface: #fdf2f8;
   --color-telegram: #0284c7;
   --color-whatsapp: #25d366;
-  --glint: rgba(255, 255, 255, 0.12);
+  --glint: rgba(255, 255, 255, 0.85);
   --font-display: "Schibsted Grotesk", ui-sans-serif, sans-serif;
   --font-body: "Instrument Sans", ui-sans-serif, sans-serif;
   --font-mono: "DM Mono", ui-monospace, monospace;
-  --radius-card: 14px;
-  --radius-input: 10px;
+  --radius-card: 16px;
+  --radius-input: 12px;
   --radius-pill: 999px;
-  --tracking-display: -0.03em;
+  --tracking-display: -0.025em;
   --display-weight: 700;
 }
 
@@ -46,30 +45,30 @@ h1, h2, h3, h4 {
   font-family: var(--font-display);
   font-weight: 700;
   letter-spacing: var(--tracking-display);
-  line-height: 1.08;
+  line-height: 1.15;
   overflow-wrap: break-word;
   min-width: 0;
 }
 
-/* Hallmark Dose Pharmacy Stamps & Tabular Numerals */
+/* Numerals and data stamps */
 .font-mono-dose {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
 }
 
-/* Tactile Moulded Plastic Controls */
+/* Lagoon Blue Tactile Button */
 .dose-btn-primary {
-  height: 48px;
+  height: 44px;
   padding: 0 1.25rem;
   border-radius: var(--radius-input);
-  background: linear-gradient(to bottom, #10b981, #059669);
-  color: #042f2e;
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  color: #ffffff;
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 0.875rem;
-  border: 1px solid #059669;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 2px 0 #047857;
-  transition: transform 120ms cubic-bezier(0.16, 1, 0.3, 1), opacity 120ms ease;
+  border: 1px solid #0284c7;
+  box-shadow: 0 3px 10px rgba(2, 132, 199, 0.28);
+  transition: transform 120ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 120ms ease, opacity 120ms ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -77,23 +76,29 @@ h1, h2, h3, h4 {
   cursor: pointer;
 }
 
-.dose-btn-primary:active {
-  transform: translateY(2px);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 0 0 #047857;
+.dose-btn-primary:hover {
+  background: linear-gradient(135deg, #38bdf8, #0284c7);
+  box-shadow: 0 5px 14px rgba(2, 132, 199, 0.38);
 }
 
+.dose-btn-primary:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.2);
+}
+
+/* Cloud White Secondary Button */
 .dose-btn-secondary {
-  height: 44px;
+  height: 42px;
   padding: 0 1rem;
   border-radius: var(--radius-input);
-  background: var(--color-paper-elevated);
-  color: var(--color-ink);
+  background: #ffffff;
+  color: #0f172a;
   font-family: var(--font-body);
   font-weight: 500;
   font-size: 0.8125rem;
-  border: 1px solid var(--color-rule);
-  box-shadow: inset 0 1px 0 var(--glint);
-  transition: transform 120ms cubic-bezier(0.16, 1, 0.3, 1), background-color 120ms ease;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: transform 120ms cubic-bezier(0.16, 1, 0.3, 1), background-color 120ms ease, border-color 120ms ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -102,25 +107,28 @@ h1, h2, h3, h4 {
 }
 
 .dose-btn-secondary:hover {
-  background: #233434;
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #0284c7;
 }
 
 .dose-btn-secondary:active {
   transform: translateY(1px);
 }
 
+/* Bubblegum Pink Emergency Button */
 .dose-btn-emergency {
   height: 48px;
   padding: 0 1.25rem;
   border-radius: var(--radius-input);
-  background: linear-gradient(to bottom, #f43f5e, #e11d48);
+  background: linear-gradient(135deg, #f43f8e, #db2777);
   color: #ffffff;
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 0.875rem;
-  border: 1px solid #be123c;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 2px 0 #9f1239;
-  transition: transform 120ms cubic-bezier(0.16, 1, 0.3, 1), opacity 120ms ease;
+  border: 1px solid #db2777;
+  box-shadow: 0 4px 14px rgba(219, 39, 119, 0.35);
+  transition: transform 120ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 120ms ease, opacity 120ms ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -128,29 +136,35 @@ h1, h2, h3, h4 {
   cursor: pointer;
 }
 
+.dose-btn-emergency:hover {
+  background: linear-gradient(135deg, #ec4899, #be185d);
+  box-shadow: 0 6px 18px rgba(219, 39, 119, 0.45);
+}
+
 .dose-btn-emergency:active {
-  transform: translateY(2px);
-  box-shadow: 0 0 0 transparent;
+  transform: translateY(1px);
+  box-shadow: 0 2px 6px rgba(219, 39, 119, 0.2);
 }
 
-/* Compartment Plastic Trays */
+/* Cloud White Compartment Trays */
 .dose-tray {
-  background-color: var(--color-paper-2);
-  border: 1px solid var(--color-rule);
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: var(--radius-card);
-  box-shadow: inset 0 1px 0 var(--glint), 0 12px 28px -12px rgba(4, 15, 14, 0.45);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
 }
 
+/* Bubblegum Pink Emergency Tray */
 .dose-tray-emergency {
-  background-color: var(--color-emergency-surface);
-  border: 1px solid rgba(225, 29, 72, 0.4);
+  background-color: #fdf2f8;
+  border: 2px solid #f472b6;
   border-radius: var(--radius-card);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 12px 30px -12px rgba(190, 18, 60, 0.3);
+  box-shadow: 0 4px 16px -2px rgba(236, 72, 153, 0.18);
 }
 
 /* Focus Visible */
 *:focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid #0284c7;
   outline-offset: 2px;
 }
 
@@ -175,10 +189,10 @@ h1, h2, h3, h4 {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(85, 115, 110, 0.45);
+  background: #cbd5e1;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(110, 145, 140, 0.7);
+  background: #94a3b8;
 }
