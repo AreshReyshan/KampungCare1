@@ -134,4 +134,5 @@ export interface ToastMessage {
   title: string;
   description?: string;
   type: 'success' | 'info' | 'emergency' | 'warning';
+  onUndo?: () => void;
 }

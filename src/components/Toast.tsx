@@ -4,7 +4,8 @@ import {
   AlertTriangle, 
   Send, 
   X, 
-  ShieldAlert
+  ShieldAlert,
+  RotateCcw
 } from 'lucide-react';
 import type { ToastMessage } from '../types';
 
@@ -16,9 +17,12 @@ interface ToastProps {
 export const Toast: React.FC<ToastProps> = ({ toasts, onDismiss }) => {
   if (toasts.length === 0) return null;
 
+  // Max 3 stacked toasts
+  const visibleToasts = toasts.slice(-3);
+
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-2.5 max-w-md w-full pointer-events-none">
-      {toasts.map((toast) => {
+    <div className="fixed bottom-20 right-6 z-50 flex flex-col gap-2.5 max-w-md w-full pointer-events-none">
+      {visibleToasts.map((toast) => {
         let icon = <CheckCircle2 className="w-5 h-5 text-emerald-400" />;
         let borderClass = 'border-[#243535]';
         let bgClass = 'bg-[#101717]/95 text-[#ecf4f2]';
@@ -53,6 +57,21 @@ export const Toast: React.FC<ToastProps> = ({ toasts, onDismiss }) => {
                   {toast.description}
                 </div>
               )}
+
+              {toast.onUndo && (
+                <div className="mt-2.5">
+                  <button
+                    onClick={() => {
+                      toast.onUndo!();
+                      onDismiss(toast.id);
+                    }}
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#162524] hover:bg-[#1e3432] text-[#6ee7b7] text-[11px] font-mono border border-[#2b3f3c] transition-colors active:translate-y-px"
+                  >
+                    <RotateCcw className="w-3 h-3" />
+                    <span>Undo Action</span>
+                  </button>
+                </div>
+              )}
             </div>
 
             <button
@@ -67,3 +86,4 @@ export const Toast: React.FC<ToastProps> = ({ toasts, onDismiss }) => {
     </div>
   );
 };
+

@@ -23,7 +23,6 @@ export const TelegramSimulator: React.FC<TelegramSimulatorProps> = ({
   onSendMessage,
 }) => {
   const [inputText, setInputText] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -34,7 +33,7 @@ export const TelegramSimulator: React.FC<TelegramSimulatorProps> = ({
     if (isOpen) {
       scrollToBottom();
     }
-  }, [messages, isOpen, isTyping]);
+  }, [messages, isOpen]);
 
   if (!isOpen) return null;
 
@@ -213,15 +212,6 @@ export const TelegramSimulator: React.FC<TelegramSimulatorProps> = ({
               </div>
             );
           })}
-
-          {isTyping && (
-            <div className="flex items-center gap-1.5 bg-[#182533] text-slate-400 text-xs px-3.5 py-2.5 rounded-2xl max-w-[130px] border border-slate-800">
-              <span className="w-1.5 h-1.5 bg-sky-400 rounded-full animate-bounce"></span>
-              <span className="w-1.5 h-1.5 bg-sky-400 rounded-full animate-bounce [animation-delay:0.2s]"></span>
-              <span className="w-1.5 h-1.5 bg-sky-400 rounded-full animate-bounce [animation-delay:0.4s]"></span>
-              <span className="text-xs text-slate-400 ml-1">typing...</span>
-            </div>
-          )}
 
           <div ref={messagesEndRef} />
         </div>

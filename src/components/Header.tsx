@@ -41,6 +41,11 @@ export const Header: React.FC<HeaderProps> = ({
           title: 'Community volunteers',
           subtitle: 'Verified neighborhood helpers, verified skills, and active proximity',
         };
+      case 'sensors':
+        return {
+          title: 'Smart-Ring & IoT Telemetry',
+          subtitle: 'Continuous biometrics, fall impact detection, and adaptive sensitivity calibration',
+        };
     }
   };
 

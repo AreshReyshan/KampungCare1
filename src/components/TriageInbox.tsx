@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Send, 
   Clock, 
@@ -9,11 +9,14 @@ import {
   CheckCircle2, 
   MapPin, 
   ExternalLink,
-  ShieldAlert,
-  UserCheck,
-  MessageSquare
+  UserCheck, 
+  MessageSquare,
+  AlertTriangle,
+  Check
 } from 'lucide-react';
 import type { TriageItem, Volunteer, Resident } from '../types';
+import { AiReasonChip } from './AiReasonChip';
+import { decide } from '../sim/autonomy';
 
 interface TriageInboxProps {
   items: TriageItem[];
@@ -24,6 +27,7 @@ interface TriageInboxProps {
   onOpenQuickCheckIn: (triageItem: TriageItem) => void;
   onOpenResidentPassport: (residentId: string) => void;
   onChangeHelper: (triageItem: TriageItem) => void;
+  onDismissItem?: (triageItemId: string) => void;
 }
 
 type FilterType = 'all' | 'emergency' | 'telegram_request' | 'whatsapp_request' | 'overdue_checkin';
@@ -31,14 +35,31 @@ type FilterType = 'all' | 'emergency' | 'telegram_request' | 'whatsapp_request' 
 export const TriageInbox: React.FC<TriageInboxProps> = ({
   items,
   volunteers,
+  residents,
   onAssignVolunteer,
   onOpenResolveEmergency,
   onOpenQuickCheckIn,
   onOpenResidentPassport,
   onChangeHelper,
+  onDismissItem,
 }) => {
   const [filter, setFilter] = useState<FilterType>('all');
   const [expandedQuotes, setExpandedQuotes] = useState<Record<string, boolean>>({});
+  const [liveSeconds, setLiveSeconds] = useState(14);
+
+  // Live wait clock ticking every second for urgent cases
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setLiveSeconds((s) => s + 1);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatWaitTime = (totalSecs: number) => {
+    const m = Math.floor(totalSecs / 60);
+    const s = totalSecs % 60;
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  };
 
   const toggleExpand = (id: string) => {
     setExpandedQuotes((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -126,63 +147,85 @@ export const TriageInbox: React.FC<TriageInboxProps> = ({
         </button>
       </div>
 
-      {/* 1. Emergency Banner (Hallmark Dose Clinical Emergency Tray) */}
-      {emergencyItems.map((item) => (
-        <section
-          key={item.id}
-          aria-label="High priority emergency alert"
-          className="dose-tray-emergency p-6"
-        >
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
-            <div className="flex items-start gap-4">
-              <img
-                src={item.residentAvatar}
-                alt={item.residentName}
-                className="w-14 h-14 rounded-xl object-cover border border-[#f43f5e]/40 shrink-0"
-              />
+      {/* 1. Emergency Banner (Hallmark Dose Clinical Emergency Tray with Live Wait Clock) */}
+      {emergencyItems.map((item) => {
+        const resident = residents.find((r) => r.id === item.residentId);
 
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => onOpenResidentPassport(item.residentId)}
-                    className="text-lg font-bold text-white hover:text-[#a7f3d0] transition-colors flex items-center gap-1.5 font-display"
-                  >
-                    <span>{item.residentName}</span>
-                    <ExternalLink className="w-3.5 h-3.5 text-[#fda4af]" />
-                  </button>
-                  <span className="text-xs text-[#fda4af] font-mono-dose">{item.residentAge} yrs</span>
-                  <span className="text-xs text-[#fda4af] font-mono-dose">• {item.timeAgo}</span>
-                </div>
+        return (
+          <section
+            key={item.id}
+            aria-label="High priority emergency alert"
+            className="dose-tray-emergency p-6 border-2 border-rose-500/80 shadow-2xl"
+          >
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
+              <div className="flex items-start gap-4">
+                <img
+                  src={item.residentAvatar}
+                  alt={item.residentName}
+                  className="w-14 h-14 rounded-xl object-cover border border-[#f43f5e]/40 shrink-0"
+                />
 
-                <p className="text-base font-semibold text-[#ffe4e6] leading-snug font-sans">
-                  "{item.emergencySummary}"
-                </p>
+                <div className="space-y-1">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <button
+                      onClick={() => onOpenResidentPassport(item.residentId)}
+                      className="text-lg font-bold text-white hover:text-[#a7f3d0] transition-colors flex items-center gap-1.5 font-display"
+                    >
+                      <span>{item.residentName}</span>
+                      <ExternalLink className="w-3.5 h-3.5 text-[#fda4af]" />
+                    </button>
+                    <span className="text-xs text-[#fda4af] font-mono-dose">{item.residentAge} yrs</span>
+                    
+                    {/* Live Ticking Wait Clock */}
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md font-mono text-xs bg-[#4c0519] text-[#fecdd3] border border-[#be123c] animate-pulse">
+                      <Clock className="w-3 h-3 text-[#f43f5e]" />
+                      <span>Wait: {formatWaitTime(liveSeconds)}</span>
+                    </span>
 
-                <div className="flex flex-wrap items-center gap-2 text-xs text-[#fda4af] pt-0.5 font-sans">
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-[#3b1219] text-[#fecdd3] border border-[#881337] font-mono-dose">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-[#34d399]" />
-                    {item.emergencyActionTag || 'Auto-replied 999 instructions & alerted daughter (Zainab)'}
-                  </span>
+                    {/* AI Autonomy Reason Chip */}
+                    <AiReasonChip
+                      item={item}
+                      volunteers={volunteers}
+                      resident={resident}
+                    />
+                  </div>
+
+                  <p className="text-base font-semibold text-[#ffe4e6] leading-snug font-sans">
+                    "{item.emergencySummary}"
+                  </p>
+
+                  <div className="flex flex-wrap items-center gap-2 text-xs text-[#fda4af] pt-0.5 font-sans">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-[#3b1219] text-[#fecdd3] border border-[#881337] font-mono-dose">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#34d399]" />
+                      {item.emergencyActionTag || 'Drafted 999 response script & alerted daughter (Zainab)'}
+                    </span>
+                    <span className="text-[11px] font-mono text-[#fda4af]/80">
+                      • Strict Policy: AI blocked from auto-dialing 999
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="shrink-0 flex items-center">
-              <button
-                onClick={() => onOpenResolveEmergency(item)}
-                className="dose-btn-emergency w-full md:w-auto"
-              >
-                <PhoneCall className="w-4 h-4" />
-                <span>Resolve &amp; log call</span>
-              </button>
+              <div className="shrink-0 flex items-center">
+                <button
+                  onClick={() => onOpenResolveEmergency(item)}
+                  className="dose-btn-emergency w-full md:w-auto h-12 px-6 shadow-xl"
+                >
+                  <PhoneCall className="w-4 h-4" />
+                  <span>Confirm 999 &amp; Log Call</span>
+                </button>
+              </div>
             </div>
-          </div>
-        </section>
-      ))}
+          </section>
+        );
+      })}
 
       {/* Main Action Feed: Compartment Trays */}
       <div className="space-y-4">
         {otherItems.map((item) => {
+          const resident = residents.find((r) => r.id === item.residentId);
+          const decision = decide(item, resident);
+
           if (item.type === 'telegram_request' || item.type === 'whatsapp_request') {
             const isWhatsApp = item.type === 'whatsapp_request';
             const matchedVol =
@@ -191,11 +234,14 @@ export const TriageInbox: React.FC<TriageInboxProps> = ({
 
             const isExpanded = expandedQuotes[item.id];
             const originalMsg = item.originalWhatsAppMessage || item.originalTelegramMessage;
+            const isProposed = decision.tier === 'propose';
 
             return (
               <article
                 key={item.id}
-                className="dose-tray p-5 transition-transform duration-100 ease-out hover:border-[#334c48]"
+                className={`dose-tray p-5 transition-transform duration-100 ease-out hover:border-[#334c48] ${
+                  isProposed ? 'border-amber-700/60 bg-[#141a18]' : ''
+                }`}
               >
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
                   {/* Left Side: Senior & Request Details */}
@@ -254,6 +300,13 @@ export const TriageInbox: React.FC<TriageInboxProps> = ({
                             {item.requiredCareTag}
                           </span>
                         )}
+
+                        {/* AI Reason Chip */}
+                        <AiReasonChip
+                          item={item}
+                          volunteers={volunteers}
+                          resident={resident}
+                        />
                       </div>
 
                       <p className="text-sm font-semibold text-[#f0f5f4] leading-snug font-sans">
@@ -281,44 +334,106 @@ export const TriageInbox: React.FC<TriageInboxProps> = ({
                     </div>
                   </div>
 
-                  {/* Right Side: Matched Helper Compartment (Divided by subtle vertical border) */}
+                  {/* Right Side: Matched Helper Compartment or Proposed Approval Card */}
                   <div className="lg:col-span-5 border-t lg:border-t-0 lg:border-l border-[#20312f] pt-4 lg:pt-0 lg:pl-5 space-y-3">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="font-medium text-[#809692] font-sans">Matched volunteer</span>
-                      <button
-                        onClick={() => onChangeHelper(item)}
-                        className="text-xs text-[#10b981] hover:underline font-mono-dose"
-                      >
-                        Change helper
-                      </button>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                      <img
-                        src={matchedVol.avatar}
-                        alt={matchedVol.name}
-                        className="w-10 h-10 rounded-lg object-cover border border-[#2b3f3c]"
-                      />
-                      <div className="min-w-0 flex-1">
-                        <div className="text-sm font-bold text-[#f0f5f4] truncate font-display">
-                          {matchedVol.name}
+                    {isProposed ? (
+                      /* Proposed Approval Card */
+                      <div className="p-3.5 rounded-xl bg-[#241708] border border-[#78350f] space-y-2.5">
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="font-bold font-mono text-[#fcd34d] flex items-center gap-1.5">
+                            <AlertTriangle className="w-3.5 h-3.5 text-[#f59e0b]" />
+                            PROPOSED APPROVAL
+                          </span>
+                          <span className="font-mono text-[10px] text-[#fbbf24]">
+                            Urgency 3 • {(decision.confidence * 100).toFixed(0)}% conf
+                          </span>
                         </div>
-                        <div className="text-xs text-[#809692] truncate font-mono-dose">
-                          <span className="text-[#a7f3d0]">{matchedVol.distanceKm} km away</span>
-                          {' • '}
-                          <span>{matchedVol.verifiedSkills[0] || 'Verified'}</span>
+
+                        <div className="flex items-center gap-3">
+                          <img
+                            src={matchedVol.avatar}
+                            alt={matchedVol.name}
+                            className="w-10 h-10 rounded-lg object-cover border border-[#2b3f3c]"
+                          />
+                          <div className="min-w-0 flex-1">
+                            <div className="text-xs font-bold text-white truncate font-display">
+                              Recommended: {matchedVol.name}
+                            </div>
+                            <div className="text-[11px] text-[#fcd34d] truncate font-mono">
+                              {matchedVol.distanceKm} km away • {matchedVol.verifiedSkills[0]}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2 pt-1">
+                          <button
+                            onClick={() => onAssignVolunteer(item, matchedVol)}
+                            className="dose-btn-primary h-9 flex-1 text-xs"
+                          >
+                            <Check className="w-3.5 h-3.5" />
+                            <span>Approve Dispatch</span>
+                          </button>
+
+                          <button
+                            onClick={() => onChangeHelper(item)}
+                            className="dose-btn-secondary h-9 px-3 text-xs font-mono"
+                            title="Choose another candidate"
+                          >
+                            Alternate
+                          </button>
+
+                          {onDismissItem && (
+                            <button
+                              onClick={() => onDismissItem(item.id)}
+                              className="h-9 px-2 text-[10px] font-mono text-[#809692] hover:text-rose-400"
+                              title="Reject proposal"
+                            >
+                              Reject
+                            </button>
+                          )}
                         </div>
                       </div>
-                    </div>
+                    ) : (
+                      /* Standard Routine Action */
+                      <>
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="font-medium text-[#809692] font-sans">Matched volunteer</span>
+                          <button
+                            onClick={() => onChangeHelper(item)}
+                            className="text-xs text-[#10b981] hover:underline font-mono-dose"
+                          >
+                            Change helper
+                          </button>
+                        </div>
 
-                    <button
-                      onClick={() => onAssignVolunteer(item, matchedVol)}
-                      className="dose-btn-primary w-full"
-                    >
-                      <UserCheck className="w-4 h-4" />
-                      <span>Dispatch {matchedVol.name.split(' ')[0]}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
+                        <div className="flex items-center gap-3">
+                          <img
+                            src={matchedVol.avatar}
+                            alt={matchedVol.name}
+                            className="w-10 h-10 rounded-lg object-cover border border-[#2b3f3c]"
+                          />
+                          <div className="min-w-0 flex-1">
+                            <div className="text-sm font-bold text-[#f0f5f4] truncate font-display">
+                              {matchedVol.name}
+                            </div>
+                            <div className="text-xs text-[#809692] truncate font-mono-dose">
+                              <span className="text-[#a7f3d0]">{matchedVol.distanceKm} km away</span>
+                              {' • '}
+                              <span>{matchedVol.verifiedSkills[0] || 'Verified'}</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <button
+                          onClick={() => onAssignVolunteer(item, matchedVol)}
+                          className="dose-btn-primary w-full"
+                        >
+                          <UserCheck className="w-4 h-4" />
+                          <span>Dispatch {matchedVol.name.split(' ')[0]}</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </button>
+                      </>
+                    )}
                   </div>
                 </div>
               </article>
@@ -326,10 +441,14 @@ export const TriageInbox: React.FC<TriageInboxProps> = ({
           }
 
           if (item.type === 'overdue_checkin') {
+            const isProposed = decision.tier === 'propose';
+
             return (
               <article
                 key={item.id}
-                className="dose-tray p-5 transition-transform duration-100 ease-out hover:border-[#334c48]"
+                className={`dose-tray p-5 transition-transform duration-100 ease-out hover:border-[#334c48] ${
+                  isProposed ? 'border-amber-700/60' : ''
+                }`}
               >
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                   <div className="flex items-center gap-3.5">
@@ -345,7 +464,7 @@ export const TriageInbox: React.FC<TriageInboxProps> = ({
                     </button>
 
                     <div className="space-y-0.5">
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-wrap items-center gap-2">
                         <button
                           onClick={() => onOpenResidentPassport(item.residentId)}
                           className="text-base font-bold text-[#f0f5f4] hover:text-[#10b981] transition-colors font-display"
@@ -353,10 +472,18 @@ export const TriageInbox: React.FC<TriageInboxProps> = ({
                           {item.residentName}
                         </button>
                         <span className="text-xs text-[#809692] font-mono-dose">{item.residentAge} yrs</span>
+                        
                         <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-mono-dose bg-[#2c1d11] text-[#fcd34d] border border-[#78350f]">
                           <Clock className="w-3 h-3 text-[#f59e0b]" />
                           {item.overdueDuration}
                         </span>
+
+                        {/* AI Reason Chip */}
+                        <AiReasonChip
+                          item={item}
+                          volunteers={volunteers}
+                          resident={resident}
+                        />
                       </div>
 
                       <p className="text-xs text-[#9eb1ad] font-sans">
@@ -371,7 +498,7 @@ export const TriageInbox: React.FC<TriageInboxProps> = ({
                     </div>
                   </div>
 
-                  <div className="shrink-0 flex items-center">
+                  <div className="shrink-0 flex items-center gap-2">
                     <button
                       onClick={() => onOpenQuickCheckIn(item)}
                       className="dose-btn-secondary w-full md:w-auto"

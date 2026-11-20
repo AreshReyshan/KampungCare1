@@ -6,8 +6,6 @@ import {
   Paperclip, 
   CheckCheck, 
   Sparkles, 
-  Phone, 
-  Video, 
   Smile, 
   MessageSquare
 } from 'lucide-react';
@@ -27,7 +25,6 @@ export const WhatsAppSimulator: React.FC<WhatsAppSimulatorProps> = ({
   onSendMessage,
 }) => {
   const [inputText, setInputText] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -38,7 +35,7 @@ export const WhatsAppSimulator: React.FC<WhatsAppSimulatorProps> = ({
     if (isOpen) {
       scrollToBottom();
     }
-  }, [messages, isOpen, isTyping]);
+  }, [messages, isOpen]);
 
   if (!isOpen) return null;
 
@@ -218,15 +215,6 @@ export const WhatsAppSimulator: React.FC<WhatsAppSimulatorProps> = ({
               </div>
             );
           })}
-
-          {isTyping && (
-            <div className="flex items-center gap-1.5 bg-[#202c33] text-slate-400 text-xs px-3.5 py-2.5 rounded-2xl max-w-[130px] border border-[#2a3942]">
-              <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-bounce"></span>
-              <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-bounce [animation-delay:0.2s]"></span>
-              <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-bounce [animation-delay:0.4s]"></span>
-              <span className="text-xs text-slate-400 ml-1">typing...</span>
-            </div>
-          )}
 
           <div ref={messagesEndRef} />
         </div>

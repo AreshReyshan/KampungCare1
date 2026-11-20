@@ -11,7 +11,7 @@ import {
   MessageSquare
 } from 'lucide-react';
 
-export type TabType = 'triage' | 'active' | 'residents' | 'volunteers';
+export type TabType = 'triage' | 'active' | 'residents' | 'volunteers' | 'sensors';
 
 interface SidebarProps {
   currentTab: TabType;
@@ -26,6 +26,7 @@ interface SidebarProps {
   onOpenTelegramSimulator: () => void;
   onOpenWhatsAppSimulator: () => void;
   onResetData: () => void;
+  onOpenAuditDrawer?: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -35,6 +36,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onOpenTelegramSimulator,
   onOpenWhatsAppSimulator,
   onResetData,
+  onOpenAuditDrawer,
 }) => {
   const navItems = [
     {
@@ -65,6 +67,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
       icon: HeartHandshake,
       count: counts.volunteers,
       description: 'Verified helpers'
+    },
+    {
+      id: 'sensors' as TabType,
+      label: 'Ring & Sensors',
+      icon: ShieldCheck,
+      count: 0,
+      description: 'Fall telemetry'
     },
   ];
 
@@ -195,6 +204,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <MessageSquare className="w-3.5 h-3.5" />
           <span>Simulate WhatsApp</span>
         </button>
+
+        {onOpenAuditDrawer && (
+          <button
+            onClick={onOpenAuditDrawer}
+            className="w-full flex items-center justify-center gap-2 h-9 px-3 bg-[#131f1e] hover:bg-[#182625] text-[#10b981] rounded-lg text-xs font-mono font-bold border border-[#233835] transition-colors"
+          >
+            <span>View Governance Audit</span>
+          </button>
+        )}
 
         <div className="flex items-center justify-between px-1 pt-1.5 text-xs text-[#738a86]">
           <div className="flex items-center gap-1.5 text-[#9eb1ad]">
