@@ -11,6 +11,7 @@ import {
   Clock 
 } from 'lucide-react';
 import type { AuditEntry } from '../sim/types';
+import { useSwipe } from '../hooks/useSwipe';
 
 interface AuditLogDrawerProps {
   isOpen: boolean;
@@ -28,6 +29,10 @@ export const AuditLogDrawer: React.FC<AuditLogDrawerProps> = ({
   onUndo,
 }) => {
   const [filter, setFilter] = useState<FilterType>('all');
+
+  const swipeHandlers = useSwipe({
+    onSwipeRight: onClose,
+  });
 
   if (!isOpen) return null;
 
@@ -56,7 +61,10 @@ export const AuditLogDrawer: React.FC<AuditLogDrawerProps> = ({
       />
 
       {/* Drawer Container */}
-      <div className="absolute inset-y-0 right-0 max-w-xl w-full bg-white text-slate-900 shadow-2xl flex flex-col z-10 animate-slide-in-right border-l border-slate-200">
+      <div 
+        {...swipeHandlers}
+        className="absolute inset-y-0 right-0 max-w-xl w-full bg-white text-slate-900 shadow-2xl flex flex-col z-10 animate-slide-in-right border-l border-slate-200 touch-pan-y"
+      >
         {/* Drawer Header */}
         <div className="p-6 bg-slate-50 border-b border-slate-200 shrink-0 space-y-4">
           <div className="flex items-center justify-between">

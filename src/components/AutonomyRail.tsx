@@ -11,6 +11,7 @@ import {
   AlertTriangle 
 } from 'lucide-react';
 import type { AutonomyRailEvent } from '../sim/types';
+import { useSwipe } from '../hooks/useSwipe';
 
 interface AutonomyRailProps {
   events: AutonomyRailEvent[];
@@ -25,6 +26,12 @@ export const AutonomyRail: React.FC<AutonomyRailProps> = ({
   isOpen,
   onToggle,
 }) => {
+  const swipeHandlers = useSwipe({
+    onSwipeRight: () => {
+      if (isOpen) onToggle();
+    },
+  });
+
   return (
     <>
       {/* Floating Toggle Tab when collapsed */}
@@ -42,11 +49,20 @@ export const AutonomyRail: React.FC<AutonomyRailProps> = ({
         </button>
       )}
 
+      {/* Mobile Backdrop when open */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-30 md:hidden animate-fade-in"
+          onClick={onToggle}
+        />
+      )}
+
       {/* Persistent Rail Panel */}
       {isOpen && (
         <aside
           aria-label="AI Autonomy Stream"
-          className="w-80 md:w-88 shrink-0 bg-white border-l border-slate-200 flex flex-col h-full z-20 transition-all duration-200 shadow-md"
+          {...swipeHandlers}
+          className="fixed inset-y-0 right-0 md:relative w-80 md:w-88 shrink-0 bg-white border-l border-slate-200 flex flex-col h-full z-40 md:z-20 transition-all duration-200 shadow-2xl md:shadow-md touch-pan-y"
         >
           {/* Rail Header */}
           <div className="p-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">

@@ -103,9 +103,9 @@ export const DemoBar: React.FC<DemoBarProps> = ({
           })}
         </div>
 
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-2.5 sm:gap-4">
           {/* Left: Play / Pause, Restart, Virtual Clock */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-center sm:justify-start">
             <button
               onClick={onPlayPause}
               className={`dose-btn-primary h-9 px-3.5 text-xs font-mono flex items-center gap-2 shadow-sm ${
@@ -157,7 +157,7 @@ export const DemoBar: React.FC<DemoBarProps> = ({
           </div>
 
           {/* Right: Speed Selector & Audit Drawer Trigger */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-center sm:justify-end">
             {/* Speed Multiplier */}
             <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl p-0.5 shadow-2xs">
               <span className="text-[10px] font-mono text-slate-500 px-2 flex items-center gap-1 font-semibold">

@@ -10,6 +10,7 @@ import {
   MessageSquare
 } from 'lucide-react';
 import type { WhatsAppMessage } from '../types';
+import { useSwipe } from '../hooks/useSwipe';
 
 interface WhatsAppSimulatorProps {
   isOpen: boolean;
@@ -26,6 +27,10 @@ export const WhatsAppSimulator: React.FC<WhatsAppSimulatorProps> = ({
 }) => {
   const [inputText, setInputText] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const swipeHandlers = useSwipe({
+    onSwipeRight: onClose,
+  });
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -80,7 +85,10 @@ export const WhatsAppSimulator: React.FC<WhatsAppSimulatorProps> = ({
       />
 
       {/* WhatsApp Device Drawer */}
-      <div className="absolute inset-y-0 right-0 max-w-lg w-full bg-white text-slate-900 shadow-2xl flex flex-col z-10 animate-slide-in-right border-l border-slate-200">
+      <div 
+        {...swipeHandlers}
+        className="absolute inset-y-0 right-0 max-w-lg w-full bg-white text-slate-900 shadow-2xl flex flex-col z-10 animate-slide-in-right border-l border-slate-200 touch-pan-y"
+      >
         {/* WhatsApp Header */}
         <div className="px-5 py-3.5 bg-[#075e54] text-white flex items-center justify-between shadow-md shrink-0 border-b border-[#054c44]">
           <div className="flex items-center gap-3.5">

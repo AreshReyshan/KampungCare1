@@ -14,6 +14,7 @@ import { CompleteVisitModal } from './components/CompleteVisitModal';
 import { QuickCheckInModal } from './components/QuickCheckInModal';
 import { VolunteerSelectModal } from './components/VolunteerSelectModal';
 import { Toast } from './components/Toast';
+import { useSwipe } from './hooks/useSwipe';
 
 // Semi-Autonomous Simulation & Governance System
 import { engine, type EngineState } from './sim/engine';
@@ -50,10 +51,14 @@ function nextId(prefix: string): string {
   return `${prefix}-${Date.now()}-${++idCounter}`;
 }
 
+// Tab order for mobile swipe gestures
+const TABS: TabType[] = ['triage', 'active', 'residents', 'volunteers', 'sensors'];
+
 export function App() {
   // Navigation & UI state
   const [currentTab, setCurrentTab] = useState<TabType>('triage');
   const [searchQuery, setSearchQuery] = useState('');
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
   // Primary Domain State (seeded deterministically from mockData)
   const [residents, setResidents] = useState<Resident[]>(INITIAL_RESIDENTS);
@@ -68,7 +73,9 @@ export function App() {
   const [engineState, setEngineState] = useState<EngineState>(() => engine.getState());
   const [railEvents, setRailEvents] = useState<AutonomyRailEvent[]>([]);
   const [auditEntries, setAuditEntries] = useState<AuditEntry[]>(() => auditManager.getEntries());
-  const [isRailOpen, setIsRailOpen] = useState(true);
+  const [isRailOpen, setIsRailOpen] = useState(() => 
+    typeof window !== 'undefined' ? window.innerWidth >= 1024 : true
+  );
   const [isAuditDrawerOpen, setIsAuditDrawerOpen] = useState(false);
 
   // Simulator Drawers & Modal States
@@ -916,6 +923,86 @@ export function App() {
   const selectedResident = residents.find((r) => r.id === selectedResidentId) || null;
   const auditCounts = auditManager.getCounts();
 
+  const handleSwipeLeft = useCallback(() => {
+    // If any modal or drawer is open, ignore canvas swipe
+    if (
+      selectedResidentId !== null ||
+      isTelegramOpen ||
+      isWhatsAppOpen ||
+      isAuditDrawerOpen ||
+      resolvingEmergencyItem !== null ||
+      completingDispatch !== null ||
+      checkingInItem !== null ||
+      changingHelperItem !== null
+    ) {
+      return;
+    }
+
+    // If mobile sidebar is open, swipe left closes it
+    if (isMobileSidebarOpen) {
+      setIsMobileSidebarOpen(false);
+      return;
+    }
+
+    setCurrentTab((prevTab) => {
+      const currentIndex = TABS.indexOf(prevTab);
+      if (currentIndex < TABS.length - 1) {
+        return TABS[currentIndex + 1];
+      }
+      return prevTab;
+    });
+  }, [
+    selectedResidentId,
+    isTelegramOpen,
+    isWhatsAppOpen,
+    isAuditDrawerOpen,
+    resolvingEmergencyItem,
+    completingDispatch,
+    checkingInItem,
+    changingHelperItem,
+    isMobileSidebarOpen,
+  ]);
+
+  const handleSwipeRight = useCallback(() => {
+    // If any modal or drawer is open, ignore canvas swipe
+    if (
+      selectedResidentId !== null ||
+      isTelegramOpen ||
+      isWhatsAppOpen ||
+      isAuditDrawerOpen ||
+      resolvingEmergencyItem !== null ||
+      completingDispatch !== null ||
+      checkingInItem !== null ||
+      changingHelperItem !== null
+    ) {
+      return;
+    }
+
+    setCurrentTab((prevTab) => {
+      const currentIndex = TABS.indexOf(prevTab);
+      if (currentIndex > 0) {
+        return TABS[currentIndex - 1];
+      }
+      // If on the first tab ('triage') and user swipes right, reveal mobile navigation drawer!
+      setIsMobileSidebarOpen(true);
+      return prevTab;
+    });
+  }, [
+    selectedResidentId,
+    isTelegramOpen,
+    isWhatsAppOpen,
+    isAuditDrawerOpen,
+    resolvingEmergencyItem,
+    completingDispatch,
+    checkingInItem,
+    changingHelperItem,
+  ]);
+
+  const canvasSwipeHandlers = useSwipe({
+    onSwipeLeft: handleSwipeLeft,
+    onSwipeRight: handleSwipeRight,
+  });
+
   return (
     <div className="flex h-screen bg-[#f8fafc] text-[#0f172a] overflow-hidden font-sans">
       {/* Sleek Left Sidebar */}
@@ -933,20 +1020,33 @@ export function App() {
         onOpenWhatsAppSimulator={() => setIsWhatsAppOpen(true)}
         onResetData={handleResetData}
         onOpenAuditDrawer={() => setIsAuditDrawerOpen(true)}
+        isMobileOpen={isMobileSidebarOpen}
+        onCloseMobile={() => setIsMobileSidebarOpen(false)}
       />
 
       {/* Main Spacious Canvas */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-y-auto relative">
+      <div 
+        {...canvasSwipeHandlers}
+        className="flex-1 flex flex-col min-w-0 overflow-y-auto relative touch-pan-y"
+      >
         <Header
           currentTab={currentTab}
+          onSelectTab={setCurrentTab}
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
           onOpenTelegram={() => setIsTelegramOpen(true)}
           onOpenWhatsApp={() => setIsWhatsAppOpen(true)}
           emergencyCount={emergencyCount}
+          onOpenMobileMenu={() => setIsMobileSidebarOpen(true)}
+          counts={{
+            triage: triageItems.length,
+            active: activeCount,
+            residents: residents.length,
+            volunteers: volunteers.length,
+          }}
         />
 
-        <main className="flex-1 px-8 py-8 pb-24">
+        <main className="flex-1 px-4 sm:px-8 py-6 sm:py-8 pb-24">
           {currentTab === 'triage' && (
             <TriageInbox
               items={triageItems}
