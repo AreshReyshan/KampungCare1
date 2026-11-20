@@ -4,10 +4,10 @@ import type { TriageItem, ActiveDispatch } from '../types';
 export const DEMO_BEATS: BeatDefinition[] = [
   {
     number: 1,
-    totalBeats: 5,
+    totalBeats: 6,
     atSeconds: 0,
     timeLabel: '0:00',
-    label: 'Baseline Monitoring',
+    label: 'Baseline Surveillance',
     tier: 'idle',
     description: 'Idle dashboard with live clock ticking on existing overdue check-ins.',
     run: (ctx) => {
@@ -17,46 +17,43 @@ export const DEMO_BEATS: BeatDefinition[] = [
         title: 'Semi-Autonomous Surveillance Online',
         reasoning: [
           'Background sensor stream and intake queues connected.',
-          'Two routine overdue check-ins queued for coordinator review.',
+          'Active monitoring for 12 Setapak & Taman Melati residents.',
         ],
       });
     },
   },
   {
     number: 2,
-    totalBeats: 5,
+    totalBeats: 6,
     atSeconds: 20,
     timeLabel: '0:20',
-    label: 'Auto Grocery Dispatch',
+    label: 'Auto Dispatch: Uncle Lim Groceries',
     tier: 'auto',
     description: 'Uncle Lim WhatsApps routine grocery request. AI triages, scores, and auto-dispatches helper with WhatsApp ETA.',
     run: (ctx) => {
       const groceryText =
         'Good day, Uncle Lim here. Need wholemeal bread, eggs and low-sugar soy milk tomorrow morning.';
 
-      // 1. Simulate WhatsApp message intake
       ctx.sendWhatsAppSimMessage(groceryText, true);
 
-      // 2. Stage reasoning in rail
       ctx.addRailEvent({
         tier: 'auto',
-        title: 'Triaged WhatsApp Intake',
-        subtitle: 'Urgency 1 • 0.92 confidence • Routine non-clinical',
+        title: 'Triaged Low-Risk Grocery Intake',
+        subtitle: 'Uncle Lim • Urgency 1 • 0.92 confidence',
         confidence: 0.92,
         urgency: 1,
         details: [
           'Resident: Uncle Lim (79 yrs, Danau Kota)',
           'Intent: Household grocery errand (eggs, bread, soy milk)',
-          'Risk profile: Zero active cardiac/fall symptoms',
+          'Risk profile: Low risk, routine non-clinical',
         ],
       });
 
-      // 3. Match candidate
       const helper = ctx.volunteers.find((v) => v.id === 'vol-khairul') || ctx.volunteers[4];
 
       ctx.addRailEvent({
         tier: 'auto',
-        title: `Matched Helper: ${helper.name}`,
+        title: `Auto-Matched Helper: ${helper.name}`,
         subtitle: `${helper.distanceKm} km away • Grocery errands verified`,
         confidence: 0.92,
         urgency: 1,
@@ -67,7 +64,6 @@ export const DEMO_BEATS: BeatDefinition[] = [
         ],
       });
 
-      // 4. Create triage item and immediately auto-dispatch
       const triageId = 'trg-auto-uncle-lim-' + Date.now();
       const dispatchId = 'disp-auto-uncle-lim-' + Date.now();
 
@@ -93,19 +89,15 @@ export const DEMO_BEATS: BeatDefinition[] = [
         notes: groceryText,
       };
 
-      // State transition
       ctx.setActiveDispatches((prev) => [newDispatch, ...prev]);
 
-      // WhatsApp bot confirmation to resident
       ctx.sendWhatsAppSimMessage(
-        `✅ Sukarelawan ${helper.name} telah ditugaskan untuk membeli barangan dapur anda. Anggaran tiba esok 9:30 pagi. Sila tunggu di rumah.`,
+        `✅ Sukarelawan ${helper.name} telah ditugaskan secara automatik untuk membeli barangan dapur anda. Anggaran tiba esok 9:30 pagi. Sila tunggu di rumah.`,
         false
       );
 
-      // Reversible Undo handler
       const undoAction = () => {
         ctx.setActiveDispatches((prev) => prev.filter((d) => d.id !== dispatchId));
-        // Restore to triage if desired
         const restoredTriage: TriageItem = {
           id: triageId,
           type: 'whatsapp_request',
@@ -128,19 +120,17 @@ export const DEMO_BEATS: BeatDefinition[] = [
         ctx.addToast('Auto-Dispatch Reverted', 'Uncle Lim grocery task returned to Triage.', 'info');
       };
 
-      // Toast with Undo affordance
       ctx.addToast(
-        'Auto-Dispatched: Uncle Lim Groceries',
+        '⚡ AI Auto-Dispatched: Uncle Lim',
         `Assigned ${helper.name} (${helper.distanceKm} km away) via WhatsApp.`,
         'success',
         undoAction
       );
 
-      // Audit Log Entry
       ctx.addAuditLog({
         actor: 'AI',
         tier: 'auto',
-        title: 'Auto-Dispatched Grocery Assistance',
+        title: 'Auto-Dispatched: Uncle Lim Grocery Request',
         reasoning: [
           'Confidence 0.92 ≥ 0.80 threshold, routine errand with non-clinical urgency.',
           `Khairul Anuar ranked #1 (${helper.distanceKm} km, Grocery Verified).`,
@@ -152,10 +142,110 @@ export const DEMO_BEATS: BeatDefinition[] = [
   },
   {
     number: 3,
-    totalBeats: 5,
-    atSeconds: 65, // 1:05
-    timeLabel: '1:05',
-    label: 'Proposed Clinic Escort',
+    totalBeats: 6,
+    atSeconds: 42,
+    timeLabel: '0:42',
+    label: 'Auto Dispatch: Uncle Muthu Newspaper & Bread',
+    tier: 'auto',
+    description: 'Uncle Muthu requests daily newspaper and bread. AI classifies as Low Risk (0.95 conf) and auto-dispatches Sanjay Nair.',
+    run: (ctx) => {
+      const muthuText =
+        'Vanakkam, Uncle Muthu here from Bunga Raya. Can volunteer help buy Gardenia bread and daily Tamil newspaper tomorrow 8:30 AM?';
+
+      ctx.sendWhatsAppSimMessage(muthuText, true);
+
+      // AI auto-triages low-risk errand
+      ctx.addRailEvent({
+        tier: 'auto',
+        title: 'Triaged Low-Risk Errand: Uncle Muthu',
+        subtitle: 'Newspaper & Bread • Urgency 1 • 0.95 confidence',
+        confidence: 0.95,
+        urgency: 1,
+        details: [
+          'Resident: Uncle Muthu (77 yrs, Bunga Raya)',
+          'Intent: Daily Tamil newspaper & Gardenia bread drop-off',
+          'Risk profile: Zero clinical risk; routine errand',
+        ],
+      });
+
+      const helper = ctx.volunteers.find((v) => v.id === 'vol-sanjay') || ctx.volunteers[2];
+
+      ctx.addRailEvent({
+        tier: 'auto',
+        title: `Auto-Matched Helper: ${helper.name}`,
+        subtitle: `${helper.distanceKm} km away • Tamil fluent • Bunga Raya local`,
+        confidence: 0.95,
+        urgency: 1,
+        details: [
+          'Distance: 0.7 km proximity (Taman Bunga Raya)',
+          'Language match: Tamil / English / BM',
+          'Autonomous policy: 1-click clearance executed',
+        ],
+      });
+
+      // Remove from initial triage if present
+      ctx.setTriageItems((prev) => prev.filter((i) => i.id !== 'trg-auto-muthu'));
+
+      const dispatchId = 'disp-auto-muthu-' + Date.now();
+      const newDispatch: ActiveDispatch = {
+        id: dispatchId,
+        channel: 'whatsapp',
+        residentId: 'res-uncle-muthu',
+        residentName: 'Uncle Muthu',
+        residentAvatar:
+          'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80',
+        residentAddress: 'No. 12, Jalan 2/27A, Taman Bunga Raya',
+        volunteerId: helper.id,
+        volunteerName: helper.name,
+        volunteerAvatar: helper.avatar,
+        volunteerPhone: helper.phone,
+        serviceType: 'Morning Newspaper & Bread Errand',
+        carePill: 'Newspaper & Errands',
+        dispatchedAt: 'Just now',
+        timeAgo: 'Just dispatched',
+        estimatedArrival: 'Tomorrow 8:30 AM',
+        status: 'dispatched',
+        notes: muthuText,
+      };
+
+      ctx.setActiveDispatches((prev) => [newDispatch, ...prev]);
+
+      ctx.sendWhatsAppSimMessage(
+        `✅ Vanakkam Uncle Muthu! Sukarelawan ${helper.name} telah ditugaskan secara automatik untuk membeli surat khabar dan roti anda esok pagi jam 8:30 pagi.`,
+        false
+      );
+
+      const undoAction = () => {
+        ctx.setActiveDispatches((prev) => prev.filter((d) => d.id !== dispatchId));
+        ctx.addToast('Auto-Dispatch Reverted', 'Uncle Muthu task returned to Triage.', 'info');
+      };
+
+      ctx.addToast(
+        '⚡ AI Auto-Dispatched: Uncle Muthu',
+        `Matched Sanjay Nair (${helper.distanceKm} km away) automatically.`,
+        'success',
+        undoAction
+      );
+
+      ctx.addAuditLog({
+        actor: 'AI',
+        tier: 'auto',
+        title: 'Auto-Dispatched: Uncle Muthu Newspaper Run',
+        reasoning: [
+          'Low-risk classification: Urgency 1, Confidence 0.95.',
+          'Language & neighbourhood match: Sanjay Nair (0.7 km, Tamil fluent).',
+          'AI automated dispatch executed with 8s reversible window.',
+        ],
+        undo: undoAction,
+      });
+    },
+  },
+  {
+    number: 4,
+    totalBeats: 6,
+    atSeconds: 68, // 1:08
+    timeLabel: '1:08',
+    label: 'Proposed Clinic Escort (High Fall Risk)',
     tier: 'propose',
     description: 'Mrs. Tan requests clinic escort with walking frame. Mobility risk triggers proposal card for coordinator review.',
     run: (ctx) => {
@@ -164,7 +254,6 @@ export const DEMO_BEATS: BeatDefinition[] = [
 
       ctx.sendTelegramSimMessage(escortText, true);
 
-      // AI Analysis: Involves mobility risk & walking frame -> PROPOSE tier
       const helper = ctx.volunteers.find((v) => v.id === 'vol-ahmad') || ctx.volunteers[0];
 
       const proposeItem: TriageItem = {
@@ -221,15 +310,14 @@ export const DEMO_BEATS: BeatDefinition[] = [
     },
   },
   {
-    number: 4,
-    totalBeats: 5,
-    atSeconds: 95, // 1:35
-    timeLabel: '1:35',
+    number: 5,
+    totalBeats: 6,
+    atSeconds: 100, // 1:40
+    timeLabel: '1:40',
     label: 'Sensor Inactivity Escalation',
     tier: 'propose',
     description: 'Uncle Lim home sensor detects zero morning movement. Automated check-in unanswered (60s), escalated to proposed home visit.',
     run: (ctx) => {
-      // Step A: Home sensor notices lack of morning movement
       ctx.addRailEvent({
         tier: 'auto',
         title: 'IoT Sensor: Morning Inactivity Detected',
@@ -247,7 +335,6 @@ export const DEMO_BEATS: BeatDefinition[] = [
         false
       );
 
-      // Step B: After 60 simulated seconds (or immediate escalation representation in demo)
       const escalationItem: TriageItem = {
         id: 'trg-sensor-esc-uncle-lim-' + Date.now(),
         type: 'overdue_checkin',
@@ -303,15 +390,14 @@ export const DEMO_BEATS: BeatDefinition[] = [
     },
   },
   {
-    number: 5,
-    totalBeats: 5,
-    atSeconds: 130, // 2:10
-    timeLabel: '2:10',
+    number: 6,
+    totalBeats: 6,
+    atSeconds: 135, // 2:15
+    timeLabel: '2:15',
     label: 'Smart-Ring Fall & 999 Paramedic Gate',
     tier: 'human',
     description: 'Pak Samad smart ring detects fall. 30s countdown elapses, triggering HUMAN-ONLY 999 paramedic approval gate.',
     run: (ctx) => {
-      // Trigger the ring fall modal & countdown sequence
       ctx.triggerRingFall();
 
       ctx.addRailEvent({
@@ -327,7 +413,6 @@ export const DEMO_BEATS: BeatDefinition[] = [
         ],
       });
 
-      // Drafted 999 Emergency Triage Item requiring Human Confirmation
       const emergencyItem: TriageItem = {
         id: 'trg-em-ring-' + Date.now(),
         type: 'emergency',
@@ -370,7 +455,7 @@ export const DEMO_BEATS: BeatDefinition[] = [
         ],
       });
 
-      // Schedule audit drawer prompt at 2:40 (160 seconds)
+      // Prompt audit drawer at 2:40 (160 seconds)
       setTimeout(() => {
         ctx.openAuditDrawer();
       }, 5000);

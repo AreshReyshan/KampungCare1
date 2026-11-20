@@ -315,6 +315,212 @@ export const INITIAL_RESIDENTS: Resident[] = [
         outcome: 'Completed 400m with no dizziness'
       }
     ]
+  },
+  {
+    id: 'res-uncle-muthu',
+    name: 'Uncle Muthu (Muthusamy a/l Arumugam)',
+    preferredName: 'Uncle Muthu',
+    age: 77,
+    gender: 'male',
+    avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80',
+    address: 'No. 12, Jalan 2/27A, Taman Bunga Raya',
+    neighborhood: 'Taman Bunga Raya, Setapak',
+    phone: '+60 16-339 2110',
+    languages: ['Tamil', 'English', 'Bahasa Melayu'],
+    mobilityLevel: 'Independent Ambulatory • Mild Knee Joint Stiffness',
+    mobilityBadge: 'Independent Ambulatory',
+    careNeeds: [
+      {
+        title: 'Morning Newspaper & Social Reading',
+        description: 'Loves reading daily Tamil Nesan & The Star newspaper in the morning.',
+        type: 'social'
+      },
+      {
+        title: 'Low Risk Grocery Errands',
+        description: 'Routine bread and grocery purchase from Kedai Runcit Danau Kota.',
+        type: 'diet'
+      }
+    ],
+    emergencyContact: {
+      name: 'Ravi Muthusamy',
+      relationship: 'Son (Living in PJ)',
+      phone: '+60 12-667 8901',
+      whatsappNumber: '+60 12-667 8901'
+    },
+    lastCheckIn: 'Yesterday, 4:00 PM',
+    timeline: [
+      {
+        id: 'tl-mut-1',
+        date: 'Yesterday',
+        time: '4:15 PM',
+        title: 'Bread & Newspaper Drop-off',
+        description: 'Volunteer Sanjay dropped by with newspaper and fresh bread.',
+        type: 'visit_completed',
+        volunteerName: 'Sanjay Nair',
+        outcome: 'Delivered in good spirits'
+      }
+    ]
+  },
+  {
+    id: 'res-ah-po-chua',
+    name: 'Ah Po Chua (Chua Ah Sim 蔡阿心)',
+    preferredName: 'Ah Po Chua',
+    age: 81,
+    gender: 'female',
+    avatar: 'https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?w=150&auto=format&fit=crop&q=80',
+    address: 'B-08-11, Genting Court Condominium',
+    neighborhood: 'Jalan Genting Klang, Setapak',
+    phone: '+60 12-771 9023',
+    languages: ['Hokkien', 'Cantonese', 'Bahasa Melayu'],
+    mobilityLevel: 'Independent Indoors • Slow Steady Pace',
+    mobilityBadge: 'Independent Ambulatory',
+    careNeeds: [
+      {
+        title: 'Herbal Store Errand',
+        description: 'Bi-weekly pickup of herbal tea and Nin Jiom Pei Pa Koa syrup from Kedai Ubat Ban Hin.',
+        type: 'medication'
+      },
+      {
+        title: 'Friendly Chinese Language Check-In',
+        description: 'Prefers chatting in Cantonese or Hokkien during visits.',
+        type: 'social'
+      }
+    ],
+    emergencyContact: {
+      name: 'Chua Kok Leong',
+      relationship: 'Grandson',
+      phone: '+60 17-889 1234',
+      whatsappNumber: '+60 17-889 1234'
+    },
+    lastCheckIn: 'Today, 9:00 AM',
+    timeline: [
+      {
+        id: 'tl-chua-1',
+        date: '19 Oct 2026',
+        time: '11:00 AM',
+        title: 'Herbal Remedy Drop-off',
+        description: 'Volunteer Ming Fai picked up herbal tea from Kedai Ubat Ban Hin and dropped off.',
+        type: 'visit_completed',
+        volunteerName: 'Leong Ming Fai',
+        outcome: 'Routine delivery completed'
+      }
+    ]
+  },
+  {
+    id: 'res-mak-cik-salmah',
+    name: 'Mak Cik Salmah (Salmah binti Harun)',
+    preferredName: 'Mak Cik Salmah',
+    age: 73,
+    gender: 'female',
+    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
+    address: 'Blok E-02-09, Seksyen 2 Wangsa Maju',
+    neighborhood: 'Wangsa Maju, Setapak',
+    phone: '+60 19-334 1120',
+    languages: ['Bahasa Melayu'],
+    mobilityLevel: 'Fully Ambulatory • Active Garden Care',
+    mobilityBadge: 'Independent Ambulatory',
+    careNeeds: [
+      {
+        title: 'Farmasi Setapak Eyedrop Refill',
+        description: 'Routine non-clinical pickup of artificial tear eye drops once a month.',
+        type: 'medication'
+      }
+    ],
+    emergencyContact: {
+      name: 'Khairul Anuar',
+      relationship: 'Nephew',
+      phone: '+60 19-876 5432',
+      whatsappNumber: '+60 19-876 5432'
+    },
+    lastCheckIn: 'Today, 8:30 AM',
+    timeline: []
+  },
+  {
+    id: 'res-uncle-george',
+    name: 'Uncle George (George Fernandez)',
+    preferredName: 'Uncle George',
+    age: 80,
+    gender: 'male',
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80',
+    address: 'No. 54, Jalan Melati 3, Taman Melati',
+    neighborhood: 'Taman Melati',
+    phone: '+60 12-441 8901',
+    languages: ['English', 'Bahasa Melayu'],
+    mobilityLevel: 'Active Senior • Daily Garden Walk',
+    mobilityBadge: 'Independent Ambulatory',
+    careNeeds: [
+      {
+        title: 'Library Book Exchange',
+        description: 'Loves historical fiction; needs volunteer to return and borrow books from KL Library Setapak.',
+        type: 'social'
+      }
+    ],
+    emergencyContact: {
+      name: 'Clara Fernandez',
+      relationship: 'Daughter',
+      phone: '+60 12-990 1234',
+      whatsappNumber: '+60 12-990 1234'
+    },
+    lastCheckIn: 'Yesterday, 2:00 PM',
+    timeline: []
+  },
+  {
+    id: 'res-uncle-chong',
+    name: 'Uncle Chong (Chong Kok Wah 庄国华)',
+    preferredName: 'Uncle Chong',
+    age: 75,
+    gender: 'male',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+    address: 'Unit 18-05, PV 12 Platinum Lake',
+    neighborhood: 'Danau Kota, Setapak',
+    phone: '+60 16-881 2290',
+    languages: ['Cantonese', 'Mandarin', 'English'],
+    mobilityLevel: 'Fully Independent',
+    mobilityBadge: 'Independent Ambulatory',
+    careNeeds: [
+      {
+        title: 'Pasar Genting Klang Fresh Produce',
+        description: 'Enjoys fresh papayas and low-sugar soy milk delivered on weekends.',
+        type: 'diet'
+      }
+    ],
+    emergencyContact: {
+      name: 'Chong Mei Ling',
+      relationship: 'Daughter',
+      phone: '+60 17-234 5678',
+      whatsappNumber: '+60 17-234 5678'
+    },
+    lastCheckIn: 'Today, 10:00 AM',
+    timeline: []
+  },
+  {
+    id: 'res-nek-timah',
+    name: 'Nek Timah (Fatimah binti Idris)',
+    preferredName: 'Nek Timah',
+    age: 83,
+    gender: 'female',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+    address: 'Lot 104, Kampung Padang Balang',
+    neighborhood: 'Padang Balang, Setapak',
+    phone: '+60 17-551 2240',
+    languages: ['Bahasa Melayu'],
+    mobilityLevel: 'Independent Indoors • Slow Outdoor Stroll',
+    mobilityBadge: 'Independent Ambulatory',
+    careNeeds: [
+      {
+        title: 'Weekly Rice & Cooking Oil Purchase',
+        description: 'Light household grocery run to Pasar Mini Padang Balang.',
+        type: 'diet'
+      }
+    ],
+    emergencyContact: {
+      name: 'Mohd Shahril',
+      relationship: 'Grandson',
+      phone: '+60 13-908 7765',
+      whatsappNumber: '+60 13-908 7765'
+    },
+    lastCheckIn: 'Today, 11:30 AM',
+    timeline: []
   }
 ];
 
@@ -408,10 +614,136 @@ export const INITIAL_VOLUNTEERS: Volunteer[] = [
     languages: ['Bahasa Melayu'],
     verifiedSkills: ['Grocery & Heavy Errands', 'Motorcycle & Car', 'Handyman Safety Checks'],
     bio: 'Local community committee member. Coordinates emergency home maintenance and grocery deliveries.'
+  },
+  {
+    id: 'vol-aisyah',
+    name: 'Aisyah Humaira',
+    age: 22,
+    avatar: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=150&auto=format&fit=crop&q=80',
+    phone: '+60 11-5544 3321',
+    telegramHandle: '@aisyah_tarumt',
+    whatsappNumber: '+60 11-5544 3321',
+    distanceKm: 0.4,
+    neighborhood: 'Melati Utama (Opposite TAR UMT)',
+    isAvailable: true,
+    status: 'available',
+    completedVisits: 38,
+    rating: 4.9,
+    languages: ['Bahasa Melayu', 'English'],
+    verifiedSkills: ['Pharmacy Errand Verified', 'Medication Refill Pick-up', 'Senior Companionship'],
+    bio: 'TAR UMT Pharmacy Year 3 student. Handles non-clinical prescription drop-offs and friendly morning check-ins.'
+  },
+  {
+    id: 'vol-ming-fai',
+    name: 'Leong Ming Fai (梁明辉)',
+    age: 27,
+    avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&auto=format&fit=crop&q=80',
+    phone: '+60 12-665 9901',
+    telegramHandle: '@mingfai_danau',
+    whatsappNumber: '+60 12-665 9901',
+    distanceKm: 0.5,
+    neighborhood: 'PV 13 Platinum Lake, Danau Kota',
+    isAvailable: true,
+    status: 'available',
+    completedVisits: 46,
+    rating: 5.0,
+    languages: ['Cantonese', 'Mandarin', 'Bahasa Melayu', 'English'],
+    verifiedSkills: ['Grocery & Heavy Errands', 'Herbal Store Pickup', 'Cantonese/Mandarin Fluent'],
+    bio: 'Software engineer living in Danau Kota. Dedicated to helping Chinese-speaking seniors with grocery and traditional herbal pharmacy errands.'
+  },
+  {
+    id: 'vol-sanjay',
+    name: 'Sanjay Nair',
+    age: 25,
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
+    phone: '+60 17-992 4433',
+    telegramHandle: '@sanjay_sports',
+    whatsappNumber: '+60 17-992 4433',
+    distanceKm: 0.7,
+    neighborhood: 'Taman Bunga Raya',
+    isAvailable: true,
+    status: 'available',
+    completedVisits: 29,
+    rating: 4.9,
+    languages: ['Tamil', 'English', 'Bahasa Melayu'],
+    verifiedSkills: ['Mobility Stroll Escort', 'Newspaper & Reading Companion', 'Grocery Delivery'],
+    bio: 'Sports science graduate living in Bunga Raya. Volunteers for morning outdoor neighborhood strolls and newspaper runs.'
+  },
+  {
+    id: 'vol-nurul',
+    name: 'Nurul Ain binti Zakaria',
+    age: 31,
+    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80',
+    phone: '+60 13-441 7890',
+    telegramHandle: '@nurul_melati',
+    whatsappNumber: '+60 13-441 7890',
+    distanceKm: 0.8,
+    neighborhood: 'Taman Melati',
+    isAvailable: true,
+    status: 'available',
+    completedVisits: 52,
+    rating: 5.0,
+    languages: ['Bahasa Melayu', 'English'],
+    verifiedSkills: ['Household Welfare Drop-by', 'Warm Companionship', 'Nutritional Meal Delivery'],
+    bio: 'Active Rukun Tetangga (RT) committee member. Coordinates warm meal deliveries and welfare check-ins for solitary seniors.'
+  },
+  {
+    id: 'vol-daniel-lee',
+    name: 'Daniel Lee',
+    age: 23,
+    avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80',
+    phone: '+60 18-332 9908',
+    telegramHandle: '@daniel_lee_setapak',
+    whatsappNumber: '+60 18-332 9908',
+    distanceKm: 0.9,
+    neighborhood: 'Danau Kota',
+    isAvailable: true,
+    status: 'available',
+    completedVisits: 24,
+    rating: 4.8,
+    languages: ['English', 'Mandarin', 'Cantonese', 'Bahasa Melayu'],
+    verifiedSkills: ['Prescription Delivery', 'Tech & Smartphone Support', 'Library Errand'],
+    bio: 'TAR UMT student volunteer president. Assists seniors with smartphone navigation, library books, and pharmacy deliveries.'
   }
 ];
 
 export const INITIAL_TRIAGE_ITEMS: TriageItem[] = [
+  {
+    id: 'trg-auto-muthu',
+    type: 'whatsapp_request',
+    channel: 'whatsapp',
+    priority: 'normal',
+    residentId: 'res-uncle-muthu',
+    residentName: 'Uncle Muthu',
+    residentAvatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80',
+    residentAge: 77,
+    residentNeighborhood: 'Taman Bunga Raya, Setapak',
+    timestamp: '2026-10-22T00:40:00',
+    timeAgo: '5 mins ago',
+    originalWhatsAppMessage: 'Vanakkam, Uncle Muthu here from Bunga Raya. Can volunteer help buy Gardenia bread and daily Tamil newspaper tomorrow 8:30 AM?',
+    aiSummary: 'Morning Newspaper & Bread Errand • Low-Risk Routine',
+    requiredCareTag: 'Newspaper & Errands',
+    scheduledTime: 'Tomorrow, 8:30 AM',
+    matchedVolunteerId: 'vol-sanjay'
+  },
+  {
+    id: 'trg-auto-chua',
+    type: 'telegram_request',
+    channel: 'telegram',
+    priority: 'normal',
+    residentId: 'res-ah-po-chua',
+    residentName: 'Ah Po Chua',
+    residentAvatar: 'https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?w=150&auto=format&fit=crop&q=80',
+    residentAge: 81,
+    residentNeighborhood: 'Jalan Genting Klang, Setapak',
+    timestamp: '2026-10-22T00:38:00',
+    timeAgo: '7 mins ago',
+    originalTelegramMessage: 'Tolong ambil ubat batuk herba Nin Jiom dekat Kedai Ubat Ban Hin Genting Klang petang ni, terima kasih.',
+    aiSummary: 'Herbal Cough Syrup Pickup (Kedai Ubat Ban Hin) • Routine',
+    requiredCareTag: 'Herbal Errand Assist',
+    scheduledTime: 'Today, 3:00 PM',
+    matchedVolunteerId: 'vol-ming-fai'
+  },
   {
     id: 'trg-em-1',
     type: 'emergency',

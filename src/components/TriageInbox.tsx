@@ -12,7 +12,8 @@ import {
   UserCheck, 
   MessageSquare,
   AlertTriangle,
-  Check
+  Check,
+  Zap
 } from 'lucide-react';
 import type { TriageItem, Volunteer, Resident } from '../types';
 import { AiReasonChip } from './AiReasonChip';
@@ -394,17 +395,29 @@ export const TriageInbox: React.FC<TriageInboxProps> = ({
                         </div>
                       </div>
                     ) : (
-                      /* Standard Routine Action */
+                      /* Low-Risk Routine Action / Auto-Dispatch */
                       <>
-                        <div className="flex items-center justify-between text-xs">
-                          <span className="font-medium text-[#809692] font-sans">Matched volunteer</span>
-                          <button
-                            onClick={() => onChangeHelper(item)}
-                            className="text-xs text-[#10b981] hover:underline font-mono-dose"
-                          >
-                            Change helper
-                          </button>
-                        </div>
+                        {decision.tier === 'auto' ? (
+                          <div className="flex items-center justify-between text-xs pb-0.5">
+                            <span className="font-bold font-mono text-[#34d399] flex items-center gap-1.5">
+                              <Zap className="w-3.5 h-3.5 text-emerald-400 fill-emerald-400" />
+                              ⚡ LOW-RISK • AI AUTO-DISPATCH
+                            </span>
+                            <span className="font-mono text-[10px] text-[#a7f3d0] bg-[#12241f] px-1.5 py-0.5 rounded border border-[#1d4137]">
+                              {(decision.confidence * 100).toFixed(0)}% conf
+                            </span>
+                          </div>
+                        ) : (
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="font-medium text-[#809692] font-sans">Matched volunteer</span>
+                            <button
+                              onClick={() => onChangeHelper(item)}
+                              className="text-xs text-[#10b981] hover:underline font-mono-dose"
+                            >
+                              Change helper
+                            </button>
+                          </div>
+                        )}
 
                         <div className="flex items-center gap-3">
                           <img
@@ -422,16 +435,41 @@ export const TriageInbox: React.FC<TriageInboxProps> = ({
                               <span>{matchedVol.verifiedSkills[0] || 'Verified'}</span>
                             </div>
                           </div>
+                          {decision.tier === 'auto' && (
+                            <button
+                              onClick={() => onChangeHelper(item)}
+                              className="text-[10px] text-[#809692] hover:text-[#a7f3d0] underline font-mono-dose shrink-0"
+                              title="Override matched helper"
+                            >
+                              Edit
+                            </button>
+                          )}
                         </div>
 
-                        <button
-                          onClick={() => onAssignVolunteer(item, matchedVol)}
-                          className="dose-btn-primary w-full"
-                        >
-                          <UserCheck className="w-4 h-4" />
-                          <span>Dispatch {matchedVol.name.split(' ')[0]}</span>
-                          <ArrowRight className="w-3.5 h-3.5" />
-                        </button>
+                        {decision.tier === 'auto' ? (
+                          <div className="space-y-1">
+                            <button
+                              onClick={() => onAssignVolunteer(item, matchedVol)}
+                              className="w-full h-10 px-4 rounded-xl bg-gradient-to-r from-[#10b981] to-[#059669] text-white font-sans text-xs font-bold flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/40 hover:from-[#059669] hover:to-[#047857] transition-all border border-[#34d399]/40"
+                            >
+                              <Zap className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
+                              <span>⚡ Auto-Dispatch {matchedVol.name.split(' ')[0]}</span>
+                              <ArrowRight className="w-3.5 h-3.5" />
+                            </button>
+                            <p className="text-[10px] text-center text-[#6e8581] font-mono">
+                              Low-risk policy: Auto-sends in demo simulation (or click to trigger)
+                            </p>
+                          </div>
+                        ) : (
+                          <button
+                            onClick={() => onAssignVolunteer(item, matchedVol)}
+                            className="dose-btn-primary w-full"
+                          >
+                            <UserCheck className="w-4 h-4" />
+                            <span>Dispatch {matchedVol.name.split(' ')[0]}</span>
+                            <ArrowRight className="w-3.5 h-3.5" />
+                          </button>
+                        )}
                       </>
                     )}
                   </div>
